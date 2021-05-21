@@ -19,7 +19,14 @@ gen := "src/Generated"
 @install-deps:
 	pnpm install
 
-	cp node_modules/fission-kit/fonts/**/*.woff2 src/Vendor/
+	mkdir -p src/Static/fonts/
+	cp node_modules/fission-kit/fonts/**/*.woff2 src/Static/fonts/
+
+
+@production-build: clean translate-schemas
+	./node_modules/.bin/vite build ./src \
+		--config vite.config.js \
+		--outDir ../build
 
 
 

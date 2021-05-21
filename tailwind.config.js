@@ -1,3 +1,4 @@
+const plugin = require("tailwindcss/plugin")
 const kit = require("fission-kit")
 
 
@@ -7,6 +8,7 @@ module.exports = {
 
 
   purge: [
+    "src/**/*.html",
     "src/Application/**/*.elm"
   ],
 
@@ -35,7 +37,15 @@ module.exports = {
 
   plugins: [
 
-    require("@tailwindcss/forms")
+    require("@tailwindcss/forms"),
+
+    // Add custom font
+    plugin(function({ addBase }) {
+      kit.fontFaces({ fontsPath: "/fonts/" }).forEach(fontFace => {
+        addBase({ "@font-face": fontFace })
+      })
+
+    })
 
   ]
 

@@ -2,7 +2,7 @@ devDependencies:
   '@rollup/plugin-json': 4.1.0
   '@tailwindcss/forms': 0.3.2_tailwindcss@2.1.2
   autoprefixer: 10.2.5_postcss@8.2.15
-  fission-kit: github.com/fission-suite/kit/833e7a89e4ea3cff35b9303881aec8924f6de475
+  fission-kit: github.com/fission-suite/kit/73326302ef203e6ec78ec4e377a8365125974af3
   postcss: 8.2.15
   tailwindcss: 2.1.2_797cfc3ceddb49f111b184f6879a433f
   vite: 2.3.3
@@ -1036,19 +1036,19 @@ packages:
       node: '>=0.4'
     resolution:
       integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==
-  github.com/fission-suite/kit/833e7a89e4ea3cff35b9303881aec8924f6de475:
+  github.com/fission-suite/kit/73326302ef203e6ec78ec4e377a8365125974af3:
     dev: true
     name: fission-kit
     prepare: true
     requiresBuild: true
     resolution:
-      tarball: 'https://codeload.github.com/fission-suite/kit/tar.gz/833e7a89e4ea3cff35b9303881aec8924f6de475'
+      tarball: 'https://codeload.github.com/fission-suite/kit/tar.gz/73326302ef203e6ec78ec4e377a8365125974af3'
     version: 0.3.0
 specifiers:
   '@rollup/plugin-json': ^4.1.0
   '@tailwindcss/forms': ^0.3.2
   autoprefixer: ^10.2.5
-  fission-kit: fission-suite/kit#833e7a89e4ea3cff35b9303881aec8924f6de475
+  fission-kit: fission-suite/kit#73326302ef203e6ec78ec4e377a8365125974af3
   postcss: ^8.2.15
   tailwindcss: ^2.1.2
   vite: ^2.3.3

@@ -1,3 +1,4 @@
+/build
 /elm-stuff
 /node_modules
 
@@ -5,4 +6,4 @@
 # Src
 
 /src/Generated
-/src/Vendor
+/src/Static/fonts

@@ -22,7 +22,6 @@ module.exports = {
 
   // Build
   build: {
-    minify: "esbuild",
     outDir: "build"
   }
 }
