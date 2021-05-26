@@ -1,5 +1,6 @@
 module View exposing (view)
 
+import CAIP
 import Chunky exposing (..)
 import Html exposing (Html)
 import Html.Attributes as A
@@ -213,10 +214,14 @@ new model =
                     [ Html.text "Chain (& Network)" ]
                 , UI.Kit.dropdown
                     []
-                    [ Html.option
-                        []
-                        [ Html.text "ETH (Main)" ]
-                    ]
+                    (List.map
+                        (\c ->
+                            Html.option
+                                [ A.value (CAIP.chainIdToString c) ]
+                                [ Html.text c.label ]
+                        )
+                        CAIP.chainIds
+                    )
                 ]
 
             --

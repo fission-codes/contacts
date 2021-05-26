@@ -110,6 +110,7 @@ textArea =
         -- Dark mode
         ------------
         , "dark:border-neutral-2"
+        , "dark:placeholder-neutral-3"
         ]
 
 
@@ -126,4 +127,5 @@ textField =
         -- Dark mode
         ------------
         , "dark:border-neutral-2"
+        , "dark:placeholder-neutral-3"
         ]
