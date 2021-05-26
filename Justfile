@@ -39,10 +39,9 @@ gen := "src/Generated"
 
 
 @translate-schemas:
-	# echo "🔮  Translating schemas into Elm code"
-	# mkdir -p src/Generated
-	# quicktype -s schema -o src/Generated/Ingredient.elm --module Ingredient src/Schemas/Dawn/Ingredient.json
-	# quicktype -s schema -o src/Generated/Recipe.elm --module Recipe src/Schemas/Dawn/Recipe.json
+	echo "🔮  Translating schemas into Elm code"
+	mkdir -p src/Generated
+	quicktype -s schema -o src/Generated/Contact.elm --module Ingredient src/Schemas/Dawn/Contact.json
 
 
 

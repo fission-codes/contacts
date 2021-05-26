@@ -7,24 +7,17 @@ import Svg
 import Svg.Attributes as S
 
 
-h1 =
+dropdown =
     chunk
-        Html.h1
-        [ "font-display"
-        , "font-medium"
-        , "text-[90px]"
-        , "text-white"
-        , "tracking-tight"
-        , "uppercase"
-        ]
+        Html.select
+        [ "border-2"
+        , "border-neutral-5"
+        , "rounded"
+        , "w-full"
 
-
-intro =
-    chunk
-        Html.p
-        [ "italic"
-        , "text-opacity-80"
-        , "text-white"
+        -- Dark mode
+        ------------
+        , "dark:border-neutral-2"
         ]
 
 
@@ -42,8 +35,97 @@ fissionIcon { size } =
         ]
 
 
+formField =
+    chunk
+        Html.label
+        [ "block"
+        , "max-w-sm"
+        , "mb-5"
+        ]
+
+
+h1 =
+    chunk
+        Html.h1
+        [ "font-display"
+        , "font-medium"
+        , "text-[90px]"
+        , "text-white"
+        , "tracking-tight"
+        , "uppercase"
+        ]
+
+
+h2 =
+    chunk
+        Html.h2
+        [ "font-display"
+        , "font-light"
+        , "mb-6"
+        , "text-2xl"
+        , "tracking-tight"
+        ]
+
+
+intro =
+    chunk
+        Html.p
+        [ "italic"
+        , "text-opacity-80"
+        , "text-white"
+        ]
+
+
+label =
+    chunk
+        Html.div
+        [ "mb-1"
+        , "pb-px"
+        , "text-xs"
+        , "text-neutral-3"
+        , "tracking-wider"
+        , "uppercase"
+
+        -- Dark mode
+        ------------
+        , "dark:text-neutral-4"
+        ]
+
+
 paragraph =
     chunk
         Html.p
         [ "mt-3"
+        ]
+
+
+textArea =
+    chunk
+        Html.textarea
+        [ "bg-transparent"
+        , "border-2"
+        , "border-neutral-5"
+        , "placeholder-neutral-5"
+        , "rounded"
+        , "w-full"
+
+        -- Dark mode
+        ------------
+        , "dark:border-neutral-2"
+        ]
+
+
+textField =
+    chunk
+        Html.input
+        [ "bg-transparent"
+        , "border-2"
+        , "border-neutral-5"
+        , "placeholder-neutral-5"
+        , "rounded"
+        , "w-full"
+
+        -- Dark mode
+        ------------
+        , "dark:border-neutral-2"
         ]
