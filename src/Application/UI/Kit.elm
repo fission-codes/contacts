@@ -10,9 +10,11 @@ import Svg.Attributes as S
 dropdown =
     chunk
         Html.select
-        [ "border-2"
+        [ "bg-transparent"
+        , "border-2"
         , "border-neutral-5"
         , "rounded"
+        , "text-inherit"
         , "w-full"
 
         -- Dark mode
@@ -85,10 +87,6 @@ label =
         , "text-neutral-3"
         , "tracking-wider"
         , "uppercase"
-
-        -- Dark mode
-        ------------
-        , "dark:text-neutral-4"
         ]
 
 

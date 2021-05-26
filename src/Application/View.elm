@@ -178,8 +178,13 @@ new model =
                 , "mt-8"
                 , "p-3"
                 , "rounded"
-                , "text-black"
+                , "text-white"
                 , "text-opacity-50"
+
+                -- Dark mode
+                ------------
+                , "dark:bg-marker-yellow-shade"
+                , "dark:text-opacity-50"
                 ]
                 []
 
@@ -251,6 +256,11 @@ new model =
                     , "rounded"
                     , "text-white"
                     , "w-full"
+
+                    -- Dark mode
+                    ------------
+                    , "dark:bg-neutral-2"
+                    , "dark:text-neutral-5"
                     ]
                     []
                     [ Html.text "Add contact" ]
