@@ -116,6 +116,15 @@ fissionIcon { size } =
         ]
 
 
+footnote =
+    chunk
+        Html.div
+        [ "mt-4"
+        , "text-neutral-4"
+        , "text-xs"
+        ]
+
+
 formField =
     chunk
         Html.label
@@ -144,6 +153,17 @@ h2 =
         , "font-light"
         , "mb-6"
         , "text-2xl"
+        , "tracking-tight"
+        ]
+
+
+h3 =
+    chunk
+        Html.h3
+        [ "font-display"
+        , "font-light"
+        , "text-lg"
+        , "text-neutral-3"
         , "tracking-tight"
         ]
 

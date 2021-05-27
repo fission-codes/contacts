@@ -1,5 +1,9 @@
 module CAIP exposing (..)
 
+import Dict exposing (Dict)
+
+
+
 -- 🌱
 
 
@@ -16,8 +20,8 @@ type alias ChainId =
 -- 🛠
 
 
-chainIds : List ChainId
-chainIds =
+chainIdsList : List ChainId
+chainIdsList =
     [ -----------------------------------------
       -- EVM
       -----------------------------------------
@@ -34,6 +38,13 @@ chainIds =
       , label = "Matic Mainnet"
       }
     ]
+
+
+chainIds : Dict String ChainId
+chainIds =
+    chainIdsList
+        |> List.map (\a -> Tuple.pair (chainIdToString a) a)
+        |> Dict.fromList
 
 
 chainIdToString : ChainId -> String

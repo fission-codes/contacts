@@ -2,6 +2,9 @@ module View exposing (view)
 
 import CAIP
 import Chunky exposing (..)
+import Contact
+import Dict
+import Heroicons.Solid as Icons
 import Html exposing (Html)
 import Html.Attributes as A
 import Html.Events as E
@@ -9,6 +12,7 @@ import Loaders
 import Page exposing (Page(..))
 import Radix exposing (Model, Msg(..))
 import RemoteData exposing (RemoteData(..))
+import Svg.Attributes as S
 import UI.Kit
 
 
@@ -18,7 +22,7 @@ view model =
         Html.main_
         [ "font-body"
         , "min-h-screen"
-        , "text-neutral-1"
+        , "text-neutral-2"
 
         -- Dark mode
         ------------
@@ -54,7 +58,7 @@ view model =
             Success userData ->
                 case model.page of
                     Index ->
-                        new model
+                        index userData model
 
             Failure error ->
                 -- TODO
@@ -127,11 +131,131 @@ index userData model =
             [ Html.text "Addresses" ]
 
         --
-        , UI.Kit.paragraph
+        , chunk
+            Html.div
+            [ "flex" ]
             []
-            [ Html.em
-                [ A.class "text-neutral-3" ]
-                [ Html.text "You don't have any contacts yet, want to add one?" ]
+            [ UI.Kit.h3
+                []
+                [ Html.text "Blockchains" ]
+
+            --
+            , chunk
+                Html.button
+                [ "ml-3"
+                , "text-neutral-3"
+                ]
+                [ A.title "Add blockchain address" ]
+                [ Icons.plusCircle [ S.class "w-4" ]
+                ]
+            ]
+
+        --
+        -- , UI.Kit.paragraph
+        --     []
+        --     [ Html.em
+        --         [ A.class "text-neutral-3" ]
+        --         [ Html.text "You don't have any contacts yet, want to add one?" ]
+        --     ]
+        , [ { address =
+                { accountAddress = "0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb"
+                , chainID = "eip155:1"
+                , addressType = "BLOCKCHAIN_ADDRESS"
+                }
+            , createdAt = "2021-05-26T16:03:03Z"
+            , label = "Main ETH account"
+            , modifiedAt = "2021-05-26T16:03:03Z"
+            , notes = Nothing
+            }
+          , { address =
+                { accountAddress = "0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb"
+                , chainID = "eip155:137"
+                , addressType = "BLOCKCHAIN_ADDRESS"
+                }
+            , createdAt = "2021-05-26T16:03:03Z"
+            , label = "Treasure"
+            , modifiedAt = "2021-05-26T16:03:03Z"
+            , notes = Nothing
+            }
+          , { address =
+                { accountAddress = "0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb"
+                , chainID = "eip155:100"
+                , addressType = "BLOCKCHAIN_ADDRESS"
+                }
+            , createdAt = "2021-05-26T16:03:03Z"
+            , label = "xDAI test account"
+            , modifiedAt = "2021-05-26T16:03:03Z"
+            , notes = Nothing
+            }
+          ]
+            |> List.sortBy
+                .label
+            |> List.map
+                (\contact ->
+                    chunk
+                        Html.div
+                        [ "border-b"
+                        , "border-neutral-6"
+                        , "flex"
+                        , "group"
+                        , "py-3"
+                        ]
+                        []
+                        [ chunk
+                            Html.div
+                            [ "w-7/12" ]
+                            []
+                            [ Html.text contact.label ]
+                        , chunk
+                            Html.div
+                            [ "text-neutral-4"
+                            , "w-4/12"
+                            ]
+                            []
+                            [ CAIP.chainIds
+                                |> Dict.get contact.address.chainID
+                                |> Maybe.map .label
+                                |> Maybe.withDefault ""
+                                |> Html.text
+                            ]
+                        , chunk
+                            Html.div
+                            [ "text-neutral-4"
+                            , "text-right"
+                            , "w-1/12"
+                            ]
+                            []
+                            [ chunk
+                                Html.button
+                                [ "hidden"
+                                , "text-neutral-3"
+
+                                --
+                                , "group-hover:inline-block"
+                                ]
+                                []
+                                [ Icons.clipboardCopy [ S.class "w-4" ]
+                                ]
+                            ]
+                        ]
+                )
+            |> chunk
+                Html.div
+                [ "flex-1"
+                , "mt-8"
+                ]
+                []
+
+        --
+        , UI.Kit.footnote
+            []
+            [ Html.text "Signed in as "
+            , chunk
+                Html.button
+                [ "underline" ]
+                []
+                [ Html.text "username" ]
+            , Html.text "."
             ]
         ]
 
@@ -224,7 +348,7 @@ new model =
                                 [ A.value (CAIP.chainIdToString c) ]
                                 [ Html.text c.label ]
                         )
-                        CAIP.chainIds
+                        CAIP.chainIdsList
                     )
                 ]
 
@@ -286,6 +410,8 @@ mainLayout nodes =
         |> chunk
             Html.div
             [ "bg-white"
+            , "flex"
+            , "flex-col"
             , "max-w-lg"
             , "min-h-screen"
             , "px-6"
