@@ -142,7 +142,11 @@ index userData model =
 
 new model =
     mainLayout
-        [ UI.Kit.h2
+        [ UI.Kit.bgBackButton
+        , UI.Kit.backButton
+
+        --
+        , UI.Kit.h2
             []
             [ Html.text "Add a new contact" ]
 
@@ -179,7 +183,7 @@ new model =
                 , "mt-8"
                 , "p-3"
                 , "rounded"
-                , "text-white"
+                , "text-black"
                 , "text-opacity-50"
 
                 -- Dark mode
@@ -256,7 +260,6 @@ new model =
                     Html.button
                     [ "bg-neutral-4"
                     , "font-medium"
-                    , "mt-3"
                     , "p-3"
                     , "rounded"
                     , "text-white"
@@ -285,8 +288,9 @@ mainLayout nodes =
             [ "bg-white"
             , "max-w-lg"
             , "min-h-screen"
-            , "px-10"
-            , "py-12"
+            , "px-6"
+            , "py-10"
+            , "relative"
             , "w-full"
 
             -- Dark mode
@@ -297,6 +301,10 @@ mainLayout nodes =
             -------------
             , "md:max-w-screen-sm"
             , "lg:max-w-screen-md"
+
+            --
+            , "md:px-10"
+            , "md:py-12"
             ]
             []
         |> List.singleton

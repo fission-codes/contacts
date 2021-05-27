@@ -7,6 +7,85 @@ import Svg
 import Svg.Attributes as S
 
 
+backButton =
+    chunk
+        Html.button
+        [ "bg-neutral-4"
+        , "font-medium"
+        , "inline-flex"
+        , "items-center"
+        , "leading-relaxed"
+        , "mb-6"
+        , "px-3"
+        , "py-1"
+        , "rounded"
+        , "text-white"
+        , "text-sm"
+        , "whitespace-nowrap"
+
+        -- Responsive
+        -------------
+        , "sm:hidden"
+        ]
+        []
+        backButtonNodes
+
+
+bgBackButton =
+    chunk
+        Html.div
+        [ "absolute"
+        , "mr-10"
+        , "mt-12"
+        , "right-full"
+        , "top-0"
+        ]
+        []
+        [ chunk
+            Html.button
+            [ "bg-white"
+            , "bg-opacity-60"
+            , "font-medium"
+            , "hidden"
+            , "items-center"
+            , "px-3"
+            , "py-2"
+            , "rounded"
+            , "text-neutral-2"
+            , "text-opacity-40"
+            , "text-sm"
+            , "whitespace-nowrap"
+
+            -- Responsive
+            -------------
+            , "sm:inline-flex"
+            ]
+            []
+            backButtonNodes
+        ]
+
+
+backButtonNodes =
+    [ chunk
+        Html.span
+        [ "inline-block"
+        , "leading-none"
+        , "mr-2"
+        , "transform"
+        , "translate-y-px"
+        ]
+        []
+        [ Html.text "←" ]
+    , chunk
+        Html.span
+        [ "inline-block"
+        , "pt-px"
+        ]
+        []
+        [ Html.text "Back to list" ]
+    ]
+
+
 dropdown =
     chunk
         Html.select
@@ -42,7 +121,7 @@ formField =
         Html.label
         [ "block"
         , "max-w-sm"
-        , "mb-5"
+        , "mb-6"
         ]
 
 
@@ -83,7 +162,7 @@ label =
         Html.div
         [ "mb-1"
         , "pb-px"
-        , "text-xs"
+        , "text-[11px]"
         , "text-neutral-3"
         , "tracking-wider"
         , "uppercase"
