@@ -60,6 +60,9 @@ view model =
                     Index ->
                         index userData model
 
+                    New context ->
+                        new context model
+
             Failure error ->
                 -- TODO
                 [ Html.text error ]
@@ -133,7 +136,9 @@ index userData model =
         --
         , chunk
             Html.div
-            [ "flex" ]
+            [ "flex"
+            , "items-center"
+            ]
             []
             [ UI.Kit.h3
                 []
@@ -141,11 +146,14 @@ index userData model =
 
             --
             , chunk
-                Html.button
-                [ "ml-3"
+                Html.a
+                [ "inline-block"
+                , "ml-3"
                 , "text-neutral-3"
                 ]
-                [ A.title "Add blockchain address" ]
+                [ A.href "/new"
+                , A.title "Add blockchain address"
+                ]
                 [ Icons.plusCircle [ S.class "w-4" ]
                 ]
             ]
@@ -198,7 +206,12 @@ index userData model =
                         , "border-neutral-6"
                         , "flex"
                         , "group"
+                        , "items-center"
                         , "py-3"
+
+                        -- Dark mode
+                        ------------
+                        , "dark:border-darkness-above"
                         ]
                         []
                         [ chunk
@@ -220,7 +233,9 @@ index userData model =
                             ]
                         , chunk
                             Html.div
-                            [ "text-neutral-4"
+                            [ "flex"
+                            , "items-center"
+                            , "text-neutral-4"
                             , "text-right"
                             , "w-1/12"
                             ]
@@ -254,7 +269,7 @@ index userData model =
                 Html.button
                 [ "underline" ]
                 []
-                [ Html.text "username" ]
+                [ Html.text userData.name ]
             , Html.text "."
             ]
         ]
@@ -264,10 +279,10 @@ index userData model =
 -- NEW
 
 
-new model =
+new context model =
     mainLayout
-        [ UI.Kit.bgBackButton
-        , UI.Kit.backButton
+        [ UI.Kit.bgBackButton { href = "../" }
+        , UI.Kit.backButton { href = "../" }
 
         --
         , UI.Kit.h2
@@ -276,13 +291,6 @@ new model =
 
         --
         , [ chunk
-                Html.span
-                [ "leading-none"
-                , "mt-px"
-                ]
-                []
-                [ Html.text "⛓" ]
-          , chunk
                 Html.span
                 [ "ml-1" ]
                 []
@@ -312,7 +320,8 @@ new model =
 
                 -- Dark mode
                 ------------
-                , "dark:bg-marker-yellow-shade"
+                , "dark:bg-darkness-above"
+                , "dark:text-white"
                 , "dark:text-opacity-50"
                 ]
                 []
@@ -372,8 +381,7 @@ new model =
                     []
                     [ Html.text "Notes" ]
                 , UI.Kit.textArea
-                    [ A.rows 3
-                    ]
+                    [ A.rows 3 ]
                     []
                 ]
 

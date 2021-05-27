@@ -50,4 +50,5 @@ route : Parser (Page -> a) a
 route =
     oneOf
         [ map Index top
+        , map (New Page.new) (s "new")
         ]

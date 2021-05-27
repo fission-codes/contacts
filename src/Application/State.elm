@@ -9,7 +9,7 @@ import Return exposing (return)
 import Routing
 import Tag
 import Url exposing (Url)
-import Webnative exposing (Artifact(..), DecodedResponse(..))
+import Webnative exposing (Artifact(..), DecodedResponse(..), State(..))
 import Wnfs
 
 
@@ -80,12 +80,18 @@ gotWebnativeResponse response model =
         -- 🚀
         -----------------------------------------
         Webnative (Initialisation state) ->
-            if Webnative.isAuthenticated state then
-                -- TODO: Load data
-                Return.singleton { model | userData = Success {} }
+            case usernameFromState state of
+                Just username ->
+                    -- TODO: Load data
+                    { contacts = []
+                    , name = username
+                    }
+                        |> Success
+                        |> (\u -> { model | userData = u })
+                        |> Return.singleton
 
-            else
-                Return.singleton { model | userData = NotAsked }
+                Nothing ->
+                    Return.singleton { model | userData = NotAsked }
 
         Webnative (NoArtifact _) ->
             -- TODO
@@ -119,3 +125,23 @@ signIn model =
         |> Webnative.redirectToLobby Webnative.CurrentUrl
         |> Ports.webnativeRequest
         |> return model
+
+
+
+-- 🛠
+
+
+usernameFromState : Webnative.State -> Maybe String
+usernameFromState state =
+    case state of
+        NotAuthorised ->
+            Nothing
+
+        AuthSucceeded { username } ->
+            Just username
+
+        AuthCancelled _ ->
+            Nothing
+
+        Continuation { username } ->
+            Just username

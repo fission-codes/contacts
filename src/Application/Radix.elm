@@ -2,6 +2,7 @@ module Radix exposing (..)
 
 import Browser
 import Browser.Navigation as Nav
+import Contact exposing (Contact)
 import Page exposing (Page)
 import RemoteData exposing (RemoteData(..))
 import Url exposing (Url)
@@ -29,7 +30,9 @@ type alias Model =
 
 
 type alias UserData =
-    {}
+    { contacts : List Contact
+    , name : String
+    }
 
 
 appPermissions : Webnative.AppPermissions

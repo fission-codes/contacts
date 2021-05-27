@@ -7,9 +7,9 @@ import Svg
 import Svg.Attributes as S
 
 
-backButton =
+backButton { href } =
     chunk
-        Html.button
+        Html.a
         [ "bg-neutral-4"
         , "font-medium"
         , "inline-flex"
@@ -27,11 +27,11 @@ backButton =
         -------------
         , "sm:hidden"
         ]
-        []
+        [ A.href href ]
         backButtonNodes
 
 
-bgBackButton =
+bgBackButton { href } =
     chunk
         Html.div
         [ "absolute"
@@ -42,7 +42,7 @@ bgBackButton =
         ]
         []
         [ chunk
-            Html.button
+            Html.a
             [ "bg-white"
             , "bg-opacity-60"
             , "font-medium"
@@ -59,8 +59,14 @@ bgBackButton =
             -- Responsive
             -------------
             , "sm:inline-flex"
+
+            -- Dark mode
+            ------------
+            , "dark:bg-darkness"
+            , "dark:bg-opacity-60"
+            , "dark:text-[#C8CDCF]"
             ]
-            []
+            [ A.href href ]
             backButtonNodes
         ]
 
@@ -122,6 +128,10 @@ footnote =
         [ "mt-4"
         , "text-neutral-4"
         , "text-xs"
+
+        -- Dark mode
+        ------------
+        , "dark:text-neutral-3"
         ]
 
 
@@ -203,6 +213,7 @@ textArea =
         , "border-2"
         , "border-neutral-5"
         , "placeholder-neutral-5"
+        , "resize-none"
         , "rounded"
         , "w-full"
 
