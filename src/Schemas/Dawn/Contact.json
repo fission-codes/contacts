@@ -1,117 +1,124 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema",
-    "$id": "http://example.com/example.json",
-    "type": "object",
-    "title": "Contact schema",
-    "description": "Represents a contact.",
-    "default": {},
-    "examples": [
-        {
-            "label": "Main ETH account",
-            "notes": "💰",
-            "createdAt": "2021-05-26T16:03:03Z",
-            "modifiedAt": "2021-05-26T16:03:03Z",
-            "address": {
-                "accountId": "0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb",
-                "chainId": "eip155:1"
-            }
-        }
-    ],
-    "required": [
-        "label",
-        "createdAt",
-        "modifiedAt",
-        "address"
-    ],
-    "properties": {
-        "label": {
-            "$id": "#/properties/label",
-            "type": "string",
-            "title": "Label",
-            "description": "A label for this item.",
-            "default": "",
-            "examples": [
-                "Main ETH account"
-            ]
-        },
-        "notes": {
-            "$id": "#/properties/notes",
-            "type": "string",
-            "title": "Notes",
-            "description": "Optional notes.",
-            "default": "",
-            "examples": [
-                "💰"
-            ]
-        },
-        "createdAt": {
-            "$id": "#/properties/createdAt",
-            "type": "string",
-            "title": "Created at",
-            "description": "Time this item was created in the ISO8601 format.",
-            "default": "",
-            "examples": [
-                "2021-05-26T16:03:03Z"
-            ]
-        },
-        "modifiedAt": {
-            "$id": "#/properties/modifiedAt",
-            "type": "string",
-            "title": "Modified at",
-            "description": "Time this item was last modified in the ISO8601 format.",
-            "default": "",
-            "examples": [
-                "2021-05-26T16:03:03Z"
-            ]
-        },
-        "address": {
-            "$id": "#/properties/address",
-            "type": "object",
-            "title": "Address",
-            "description": "An explanation about the purpose of this instance.",
-            "default": {},
-            "examples": [
-                {
-                    "accountId": "0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb",
-                    "chainId": "eip155:1"
-                }
-            ],
-            "oneOf": [
-                {
-                  "type": "object",
-                  "title": "Blockchain account address",
-                  "description": "Points to a specific blockchain address using CAIPs.",
-                  "default": {},
-                  "properties": {
-                    "accountAddress": {
-                        "$id": "#/properties/accountAddress",
-                        "type": "string",
-                        "title": "Account address",
-                        "description": "account_address from https://github.com/ChainAgnostic/CAIPs/blob/59ea43b33006fa258ede2b430d8bbf15d398fae1/CAIPs/caip-10.md",
-                        "default": "",
-                        "examples": [
-                            "0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb"
-                        ]
-                    },
-                    "chainId": {
-                        "$id": "#/properties/chainId",
-                        "type": "string",
-                        "title": "Chain ID",
-                        "description": "chain_id from https://github.com/ChainAgnostic/CAIPs/blob/59ea43b33006fa258ede2b430d8bbf15d398fae1/CAIPs/caip-2.md",
-                        "default": "",
-                        "examples": [
-                            "eip155:1"
-                        ]
-                    }
-                  },
-                  "required": [
-                    "accountAddress",
-                    "chainId"
-                  ],
-                  "additionalProperties": true
-                }
-            ]
-        }
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "title": "Contact schema",
+  "description": "Represents a contact.",
+  "default": {},
+  "examples": [
+    {
+      "label": "Main ETH account",
+      "notes": "💰",
+      "createdAt": "2021-05-26T16:03:03Z",
+      "modifiedAt": "2021-05-26T16:03:03Z",
+      "address": {
+        "accountId": "0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb",
+        "chainId": "eip155:1"
+      }
+    }
+  ],
+  "required": [
+    "label",
+    "createdAt",
+    "modifiedAt",
+    "address"
+  ],
+  "properties": {
+    "label": {
+      "$id": "#/properties/label",
+      "type": "string",
+      "title": "Label",
+      "description": "A label for this item.",
+      "default": "",
+      "examples": [
+        "Main ETH account"
+      ]
     },
-    "additionalProperties": true
+    "notes": {
+      "$id": "#/properties/notes",
+      "type": "string",
+      "title": "Notes",
+      "description": "Optional notes.",
+      "default": "",
+      "examples": [
+        "💰"
+      ]
+    },
+    "createdAt": {
+      "$id": "#/properties/createdAt",
+      "type": "string",
+      "title": "Created at",
+      "description": "Time this item was created in the ISO8601 format.",
+      "default": "",
+      "examples": [
+        "2021-05-26T16:03:03Z"
+      ]
+    },
+    "modifiedAt": {
+      "$id": "#/properties/modifiedAt",
+      "type": "string",
+      "title": "Modified at",
+      "description": "Time this item was last modified in the ISO8601 format.",
+      "default": "",
+      "examples": [
+        "2021-05-26T16:03:03Z"
+      ]
+    },
+    "address": {
+      "$id": "#/properties/address",
+      "type": "object",
+      "title": "Address",
+      "description": "An explanation about the purpose of this instance.",
+      "default": {},
+      "examples": [
+        {
+          "type": "BLOCKCHAIN_ADDRESS",
+          "accountId": "0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb",
+          "chainId": "eip155:1"
+        }
+      ],
+      "oneOf": [
+        {
+          "type": "object",
+          "title": "Blockchain account address",
+          "description": "Points to a specific blockchain address using CAIPs.",
+          "default": {},
+          "properties": {
+            "type": {
+              "$id": "#/properties/type",
+              "type": "string",
+              "const": "BLOCKCHAIN_ADDRESS"
+            },
+            "accountAddress": {
+              "$id": "#/properties/accountAddress",
+              "type": "string",
+              "title": "Account address",
+              "description": "account_address from https://github.com/ChainAgnostic/CAIPs/blob/59ea43b33006fa258ede2b430d8bbf15d398fae1/CAIPs/caip-10.md",
+              "default": "",
+              "examples": [
+                "0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb"
+              ]
+            },
+            "chainId": {
+              "$id": "#/properties/chainId",
+              "type": "string",
+              "title": "Chain ID",
+              "description": "chain_id from https://github.com/ChainAgnostic/CAIPs/blob/59ea43b33006fa258ede2b430d8bbf15d398fae1/CAIPs/caip-2.md",
+              "default": "",
+              "examples": [
+                "eip155:1"
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "accountAddress",
+            "chainId"
+          ],
+          "additionalProperties": true
+        }
+      ]
+    }
+  },
+  "additionalProperties": true
 }
