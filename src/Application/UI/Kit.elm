@@ -1,6 +1,7 @@
 module UI.Kit exposing (..)
 
 import Chunky exposing (..)
+import Heroicons.Solid as Icons
 import Html
 import Html.Attributes as A
 import Svg
@@ -77,11 +78,10 @@ backButtonNodes =
         [ "inline-block"
         , "leading-none"
         , "mr-2"
-        , "transform"
-        , "translate-y-px"
         ]
         []
-        [ Html.text "←" ]
+        [ Icons.arrowNarrowLeft [ S.class "w-4" ]
+        ]
     , chunk
         Html.span
         [ "inline-block"

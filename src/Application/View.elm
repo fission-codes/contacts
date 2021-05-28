@@ -151,7 +151,7 @@ index userData model =
                 , "ml-3"
                 , "text-neutral-3"
                 ]
-                [ A.href "/new"
+                [ A.href "new/"
                 , A.title "Add blockchain address"
                 ]
                 [ Icons.plusCircle [ S.class "w-4" ]
@@ -248,7 +248,7 @@ index userData model =
                                 --
                                 , "group-hover:inline-block"
                                 ]
-                                []
+                                [ A.title "Copy address" ]
                                 [ Icons.clipboardCopy [ S.class "w-4" ]
                                 ]
                             ]
@@ -287,7 +287,7 @@ new context model =
         --
         , UI.Kit.h2
             []
-            [ Html.text "Add a new contact" ]
+            [ Html.text "Add a new address" ]
 
         --
         , [ chunk

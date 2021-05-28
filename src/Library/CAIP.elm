@@ -13,7 +13,16 @@ type alias ChainId =
 
     -- Extra
     , label : String
+    , group : String
     }
+
+
+mainNet =
+    "Main networks"
+
+
+testNet =
+    "Test networks"
 
 
 
@@ -28,14 +37,17 @@ chainIdsList =
       { namespace = "eip155"
       , reference = "1"
       , label = "Ethereum Mainnet"
+      , group = mainNet
       }
     , { namespace = "eip155"
       , reference = "100"
       , label = "xDAI Chain"
+      , group = mainNet
       }
     , { namespace = "eip155"
       , reference = "137"
       , label = "Matic Mainnet"
+      , group = mainNet
       }
     ]
 
