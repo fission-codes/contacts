@@ -9,8 +9,8 @@ devDependencies:
   postcss: 8.2.15
   quicktype: '@ipfs.runfission.com/ipfs/bafybeiet7p4wkt2fmdeyx4n7la5t5jry77yb2xmoxvuuagtsvg4hrdr5hm/p/quicktype-elm.tar.gz'
   tailwindcss: 2.1.2_797cfc3ceddb49f111b184f6879a433f
-  vite: 2.3.3
-  vite-plugin-elm: 2.2.0_vite@2.3.3
+  vite: 2.3.4
+  vite-plugin-elm: 2.3.1_vite@2.3.4
 lockfileVersion: 5.2
 packages:
   /@fullhuman/postcss-purgecss/3.1.3:
@@ -2410,7 +2410,7 @@ packages:
   /string-to-stream/1.1.1:
     dependencies:
       inherits: 2.0.4
-      readable-stream: 2.3.0
+      readable-stream: 2.3.7
     dev: true
     resolution:
       integrity: sha512-QySF2+3Rwq0SdO3s7BAp4x+c3qsClpPQ6abAmb0DGViiSBAkT5kL6JT2iyzEVP+T1SmzHrQD1TwlP9QAHCc+Sw==
@@ -2685,6 +2685,7 @@ packages:
     resolution:
       integrity: sha512-I8XkoQwE+fPQEhy9v012V+TSdH2kp9ts29i20TaaDUXsg7x/onePbhFJUExBfv/2ay1ZOp/Vsm3nDlmnFGSAog==
   /uuid/3.4.0:
+    deprecated: 'Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.'
     dev: true
     hasBin: true
     resolution:
@@ -2697,17 +2698,17 @@ packages:
     dev: false
     resolution:
       integrity: sha512-cXEIW6cfr15lFv563k4GuVuW/fiwjknytD37jIOLSdSWuOI6WnO/oKwmP2FQTU2l01LP8/M5TSAJpzUaGe3uWg==
-  /vite-plugin-elm/2.2.0_vite@2.3.3:
+  /vite-plugin-elm/2.3.1_vite@2.3.4:
     dependencies:
       elm-esm: 1.1.2
       node-elm-compiler: 5.0.6
-      vite: 2.3.3
+      vite: 2.3.4
     dev: true
     peerDependencies:
       vite: ^2.0.0
     resolution:
-      integrity: sha512-vNdwRUohokUkODhhVM9IXPb3R66P8DK/uLwbpFR03DHPSF5HYEYkOfO8MRq1S080QQ/utuwgdA/nH+WKR8j6Ew==
-  /vite/2.3.3:
+      integrity: sha512-Sr78/+YveXq1NjpTIo/ei1XW3P5UFTC8GbAAJEN0HxdiMztNZpj2OHTJtZWnBNltMhmEK42XmMoj+Q7lTqXHiA==
+  /vite/2.3.4:
     dependencies:
       esbuild: 0.11.23
       postcss: 8.2.15
@@ -2720,7 +2721,7 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
     resolution:
-      integrity: sha512-eO1iwRbn3/BfkNVMNJDeANAFCZ5NobYOFPu7IqfY7DcI7I9nFGjJIZid0EViTmLDGwwSUPmRAq3cRBbO3+DsMA==
+      integrity: sha512-7orxrF65+Q5n/sMCnO91S8OS0gkPJ7g+y3bLlc7CPCXVswK8to1T8YycCk9SZh+AcIc0TuN6YajWTBFS5atMNA==
   /vlq/0.2.3:
     dev: true
     resolution:
@@ -2960,7 +2961,7 @@ specifiers:
   postcss: ^8.2.15
   quicktype: 'https://ipfs.runfission.com/ipfs/bafybeiet7p4wkt2fmdeyx4n7la5t5jry77yb2xmoxvuuagtsvg4hrdr5hm/p/quicktype-elm.tar.gz'
   tailwindcss: ^2.1.2
-  vite: ^2.3.3
-  vite-plugin-elm: ^2.2.0
+  vite: ^2.3.4
+  vite-plugin-elm: ^2.3.1
   webnative: ^0.24.1
   webnative-elm: ^6.0.0

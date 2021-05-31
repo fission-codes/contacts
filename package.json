@@ -12,7 +12,7 @@
     "postcss": "^8.2.15",
     "quicktype": "https://ipfs.runfission.com/ipfs/bafybeiet7p4wkt2fmdeyx4n7la5t5jry77yb2xmoxvuuagtsvg4hrdr5hm/p/quicktype-elm.tar.gz",
     "tailwindcss": "^2.1.2",
-    "vite": "^2.3.3",
-    "vite-plugin-elm": "^2.2.0"
+    "vite": "^2.3.4",
+    "vite-plugin-elm": "^2.3.1"
   }
 }
