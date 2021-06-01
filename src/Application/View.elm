@@ -242,7 +242,9 @@ index contacts model =
                                         --------
                                         , "no-hover:inline-block"
                                         ]
-                                        [ A.title "Copy address" ]
+                                        [ A.title "Copy address"
+                                        , E.onClick (CopyToClipboard contact.address.accountAddress)
+                                        ]
                                         [ Icons.clipboardCopy [ S.class "w-4" ]
                                         ]
                                     ]

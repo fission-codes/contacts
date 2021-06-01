@@ -1,4 +1,5 @@
 dependencies:
+  copy-to-clipboard: 3.3.1
   webnative: 0.24.1
   webnative-elm: 6.0.0_webnative@0.24.1
 devDependencies:
@@ -583,6 +584,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-4FJkXzKXEDB1snCFZlLP4gpC3JILicCpGbzG9f9G7tGqGCzETQ2hWPrcinA9oU4wtf2biUaEH5065UnMeR33oA==
+  /copy-to-clipboard/3.3.1:
+    dependencies:
+      toggle-selection: 1.0.6
+    dev: false
+    resolution:
+      integrity: sha512-i13qo6kIHTTpCm8/Wup+0b1mVWETvu2kIMzKoK8FpkLkFxlt0znUAHcMzox+T8sPlqtZXq3CulEjQHsYiGFJUw==
   /core-util-is/1.0.2:
     dev: true
     resolution:
@@ -735,7 +742,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-GiaH0KJUewYok+eeY05IIgjtAe4Yltygk9Wqp1V5yVWLdhf0hYZchRjNIT9bb0mSwRcIusT3cx7PJUf3zEIfUA==
-  /es-abstract/1.18.0:
+  /es-abstract/1.18.3:
     dependencies:
       call-bind: 1.0.2
       es-to-primitive: 1.2.1
@@ -757,7 +764,7 @@ packages:
     engines:
       node: '>= 0.4'
     resolution:
-      integrity: sha512-LJzK7MrQa8TS0ja2w3YNLzUgJCGPdPOV1yVvezjNnS89D+VR08+Szt2mz3YB2Dck/+w5tfIq/RoUAFqJJGM2yw==
+      integrity: sha512-nQIr12dxV7SSxE6r6f1l3DtAeEYdsGpps13dR0TwJg1S8gyp4ZPgy3FZcHBgbiQqnoqSTb+oC+kO4UQ0C/J8vw==
   /es-to-primitive/1.2.1:
     dependencies:
       is-callable: 1.2.3
@@ -1360,7 +1367,7 @@ packages:
     dependencies:
       available-typed-arrays: 1.0.4
       call-bind: 1.0.2
-      es-abstract: 1.18.0
+      es-abstract: 1.18.3
       foreach: 2.0.5
       has-symbols: 1.0.2
     dev: false
@@ -2598,6 +2605,10 @@ packages:
       node: '>=8.0'
     resolution:
       integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==
+  /toggle-selection/1.0.6:
+    dev: false
+    resolution:
+      integrity: sha1-bkWxJj8gF/oKzH2J14sVuL932jI=
   /type-check/0.3.2:
     dependencies:
       prelude-ls: 1.1.2
@@ -2673,7 +2684,7 @@ packages:
   /util-deprecate/1.0.2:
     resolution:
       integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
-  /util/0.12.3:
+  /util/0.12.4:
     dependencies:
       inherits: 2.0.4
       is-arguments: 1.1.0
@@ -2683,7 +2694,7 @@ packages:
       which-typed-array: 1.1.4
     dev: false
     resolution:
-      integrity: sha512-I8XkoQwE+fPQEhy9v012V+TSdH2kp9ts29i20TaaDUXsg7x/onePbhFJUExBfv/2ay1ZOp/Vsm3nDlmnFGSAog==
+      integrity: sha512-bxZ9qtSlGUWSOy9Qa9Xgk11kSslpuZwaxCg4sNIDj6FLucDab2JxnHwyNTCpHMtK1MjoQiWQ6DiUMZYbSrO+Sw==
   /uuid/3.4.0:
     deprecated: 'Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.'
     dev: true
@@ -2728,7 +2739,7 @@ packages:
       integrity: sha512-DRibZL6DsNhIgYQ+wNdWDL2SL3bKPlVrRiBqV5yuMm++op8W4kGFtaQfCs4KEJn0wBZcHVHJ3eoywX8983k1ow==
   /web-encoding/1.1.5:
     dependencies:
-      util: 0.12.3
+      util: 0.12.4
     dev: false
     optionalDependencies:
       '@zxing/text-encoding': 0.9.0
@@ -2784,7 +2795,7 @@ packages:
     dependencies:
       available-typed-arrays: 1.0.4
       call-bind: 1.0.2
-      es-abstract: 1.18.0
+      es-abstract: 1.18.3
       foreach: 2.0.5
       function-bind: 1.1.1
       has-symbols: 1.0.2
@@ -2957,6 +2968,7 @@ specifiers:
   '@rollup/plugin-json': ^4.1.0
   '@tailwindcss/forms': ^0.3.2
   autoprefixer: ^10.2.5
+  copy-to-clipboard: ^3.3.1
   fission-kit: fission-suite/kit#73326302ef203e6ec78ec4e377a8365125974af3
   postcss: ^8.2.15
   quicktype: 'https://ipfs.runfission.com/ipfs/bafybeiecgq4haw5kbwhg3dgxbl44rk5pqhs45xpvecmmr2r43rfsneowua/p/Misc/quicktype-elm.tar.gz'

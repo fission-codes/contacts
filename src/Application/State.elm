@@ -51,6 +51,9 @@ update msg =
         -----------------------------------------
         -- 🐚
         -----------------------------------------
+        CopyToClipboard a ->
+            copyToClipboard a
+
         GotWebnativeResponse a ->
             gotWebnativeResponse a
 
@@ -87,6 +90,13 @@ subscriptions _ =
 
 
 -- 🐚
+
+
+copyToClipboard : String -> Manager
+copyToClipboard text model =
+    text
+        |> Ports.copyToClipboard
+        |> return model
 
 
 gotWebnativeResponse : Webnative.Response -> Manager

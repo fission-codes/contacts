@@ -75,6 +75,7 @@ type Msg
       -----------------------------------------
       -- 🐚
       -----------------------------------------
+    | CopyToClipboard String
     | GotWebnativeResponse Webnative.Response
     | SignIn
       -----------------------------------------
