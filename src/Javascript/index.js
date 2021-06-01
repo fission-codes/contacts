@@ -1,3 +1,4 @@
+import * as webnative from "webnative"
 import * as webnativeElm from "webnative-elm"
 import { Elm } from "../Application/Main.elm"
 
@@ -5,4 +6,7 @@ import { Elm } from "../Application/Main.elm"
 const app = Elm.Main.init({})
 
 
-webnativeElm.setup({ app })
+webnative.setup.debug({ enabled: true })
+
+
+webnativeElm.setup({ app, webnative })

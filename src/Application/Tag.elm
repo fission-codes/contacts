@@ -3,6 +3,9 @@ module Tag exposing (..)
 
 type Tag
     = Untagged
+      --
+    | LoadedContacts
+    | SavedContacts
 
 
 toString : Tag -> String
@@ -11,6 +14,13 @@ toString tag =
         Untagged ->
             "Untagged"
 
+        --
+        LoadedContacts ->
+            "LoadedContacts"
+
+        SavedContacts ->
+            "SavedContacts"
+
 
 fromString : String -> Result String Tag
 fromString string =
@@ -18,5 +28,13 @@ fromString string =
         "Untagged" ->
             Ok Untagged
 
+        --
+        "LoadedContacts" ->
+            Ok LoadedContacts
+
+        "SavedContacts" ->
+            Ok SavedContacts
+
+        --
         _ ->
             Err "Invalid tag"

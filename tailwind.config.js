@@ -29,6 +29,10 @@ module.exports = {
         body: [ kit.fonts.body ],
         display: [ kit.fonts.display ],
         mono: [ kit.fonts.mono ],
+      },
+
+      screens: {
+        "no-hover": { "raw": "(hover: none)" },
       }
 
     },

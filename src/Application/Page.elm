@@ -1,5 +1,9 @@
 module Page exposing (..)
 
+import CAIP
+
+
+
 -- 🌳
 
 
@@ -19,7 +23,11 @@ type alias NewContext =
 new : NewContext
 new =
     { accountAddress = ""
-    , chainId = ""
+    , chainId =
+        CAIP.chainIdsList
+            |> List.head
+            |> Maybe.map CAIP.chainIdToString
+            |> Maybe.withDefault ""
     , label = ""
     , notes = ""
     }

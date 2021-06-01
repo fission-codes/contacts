@@ -29,7 +29,7 @@ view model =
         , "dark:text-neutral-6"
         ]
         []
-        (case model.userData of
+        (case model.userData.contacts of
             NotAsked ->
                 [ notAuthorised ]
 
@@ -55,10 +55,10 @@ view model =
                     ]
                 ]
 
-            Success userData ->
+            Success contacts ->
                 case model.page of
                     Index ->
-                        index userData model
+                        index contacts model
 
                     New context ->
                         new context model
@@ -108,6 +108,7 @@ notAuthorised =
             , "py-2"
             , "rounded-full"
             , "text-[#BEBEC1]"
+            , "text-[15px]"
             , "tracking-tight"
             ]
             [ E.onClick SignIn ]
@@ -127,7 +128,7 @@ notAuthorised =
 -- INDEX
 
 
-index userData model =
+index contacts model =
     mainLayout
         [ UI.Kit.h2
             []
@@ -159,119 +160,117 @@ index userData model =
             ]
 
         --
-        -- , UI.Kit.paragraph
-        --     []
-        --     [ Html.em
-        --         [ A.class "text-neutral-3" ]
-        --         [ Html.text "You don't have any contacts yet, want to add one?" ]
-        --     ]
-        , [ { address =
-                { accountAddress = "0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb"
-                , chainID = "eip155:1"
-                , addressType = "BLOCKCHAIN_ADDRESS"
-                }
-            , createdAt = "2021-05-26T16:03:03Z"
-            , label = "Main ETH account"
-            , modifiedAt = "2021-05-26T16:03:03Z"
-            , notes = Nothing
-            }
-          , { address =
-                { accountAddress = "0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb"
-                , chainID = "eip155:137"
-                , addressType = "BLOCKCHAIN_ADDRESS"
-                }
-            , createdAt = "2021-05-26T16:03:03Z"
-            , label = "Treasure"
-            , modifiedAt = "2021-05-26T16:03:03Z"
-            , notes = Nothing
-            }
-          , { address =
-                { accountAddress = "0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb"
-                , chainID = "eip155:100"
-                , addressType = "BLOCKCHAIN_ADDRESS"
-                }
-            , createdAt = "2021-05-26T16:03:03Z"
-            , label = "xDAI test account"
-            , modifiedAt = "2021-05-26T16:03:03Z"
-            , notes = Nothing
-            }
-          ]
-            |> List.sortBy
-                .label
-            |> List.map
-                (\contact ->
-                    chunk
-                        Html.div
-                        [ "border-b"
-                        , "border-neutral-6"
-                        , "flex"
-                        , "group"
-                        , "items-center"
-                        , "py-3"
+        , case contacts of
+            [] ->
+                [ chunk
+                    Html.a
+                    [ "italic"
+                    , "text-neutral-4"
 
-                        -- Dark mode
-                        ------------
-                        , "dark:border-darkness-above"
+                    -- Dark mode
+                    ------------
+                    , "dark:text-neutral-2"
+                    ]
+                    [ A.href "new/" ]
+                    [ Html.text "You don't have any contacts yet, want to add one?" ]
+                ]
+                    |> UI.Kit.paragraph
+                        []
+                    |> List.singleton
+                    |> chunk
+                        Html.div
+                        [ "flex-1"
+                        , "mt-8"
                         ]
                         []
-                        [ chunk
-                            Html.div
-                            [ "w-7/12" ]
-                            []
-                            [ Html.text contact.label ]
-                        , chunk
-                            Html.div
-                            [ "text-neutral-4"
-                            , "w-4/12"
-                            ]
-                            []
-                            [ CAIP.chainIds
-                                |> Dict.get contact.address.chainID
-                                |> Maybe.map .label
-                                |> Maybe.withDefault ""
-                                |> Html.text
-                            ]
-                        , chunk
-                            Html.div
-                            [ "flex"
-                            , "items-center"
-                            , "text-neutral-4"
-                            , "text-right"
-                            , "w-1/12"
-                            ]
-                            []
-                            [ chunk
-                                Html.button
-                                [ "hidden"
-                                , "text-neutral-3"
 
-                                --
-                                , "group-hover:inline-block"
+            _ ->
+                contacts
+                    |> List.sortBy
+                        .label
+                    |> List.map
+                        (\contact ->
+                            chunk
+                                Html.div
+                                [ "border-b"
+                                , "border-neutral-6"
+                                , "flex"
+                                , "group"
+                                , "items-center"
+                                , "py-3"
+
+                                -- Dark mode
+                                ------------
+                                , "dark:border-darkness-above"
                                 ]
-                                [ A.title "Copy address" ]
-                                [ Icons.clipboardCopy [ S.class "w-4" ]
+                                []
+                                [ chunk
+                                    Html.div
+                                    [ "w-5/12" ]
+                                    []
+                                    [ Html.text contact.label ]
+                                , chunk
+                                    Html.div
+                                    [ "text-neutral-4"
+                                    , "w-5/12"
+                                    ]
+                                    []
+                                    [ CAIP.chainIds
+                                        |> Dict.get contact.address.chainID
+                                        |> Maybe.map .label
+                                        |> Maybe.withDefault ""
+                                        |> Html.text
+                                    ]
+                                , chunk
+                                    Html.div
+                                    [ "flex"
+                                    , "items-center"
+                                    , "justify-end"
+                                    , "text-neutral-4"
+                                    , "w-2/12"
+                                    ]
+                                    []
+                                    [ chunk
+                                        Html.button
+                                        [ "hidden"
+                                        , "text-neutral-3"
+
+                                        --
+                                        , "group-hover:inline-block"
+
+                                        -- Touch
+                                        --------
+                                        , "no-hover:inline-block"
+                                        ]
+                                        [ A.title "Copy address" ]
+                                        [ Icons.clipboardCopy [ S.class "w-4" ]
+                                        ]
+                                    ]
                                 ]
-                            ]
+                        )
+                    |> chunk
+                        Html.div
+                        [ "flex-1"
+                        , "mt-8"
                         ]
-                )
-            |> chunk
-                Html.div
-                [ "flex-1"
-                , "mt-8"
-                ]
-                []
+                        []
 
         --
-        , UI.Kit.footnote
-            []
-            [ Html.text "Signed in as "
-            , chunk
-                Html.button
-                [ "underline" ]
-                []
-                [ Html.text userData.name ]
-            , Html.text "."
-            ]
+        , case model.userData.name of
+            Just username ->
+                UI.Kit.footnote
+                    []
+                    [ Html.text "Signed in as "
+                    , chunk
+                        Html.button
+                        [ "underline" ]
+                        []
+                        [ Html.text username ]
+                    , Html.text "."
+                    ]
+
+            Nothing ->
+                Html.text ""
         ]
 
 
@@ -282,7 +281,7 @@ index userData model =
 new context model =
     mainLayout
         [ UI.Kit.bgBackButton { href = "../" }
-        , UI.Kit.backButton { href = "../" }
+        , Html.div [] [ UI.Kit.backButton { href = "../" } ]
 
         --
         , UI.Kit.h2
@@ -330,7 +329,7 @@ new context model =
         , chunk
             Html.form
             [ "mt-16" ]
-            []
+            [ E.onSubmit (AddNewContact context) ]
             [ UI.Kit.formField
                 []
                 [ UI.Kit.label
@@ -339,6 +338,12 @@ new context model =
                 , UI.Kit.textField
                     [ A.type_ "text"
                     , A.placeholder "Main ETH account"
+                    , A.required True
+                    , E.onInput
+                        (\a ->
+                            GotUpdatedNewContext
+                                { context | label = a }
+                        )
                     ]
                     []
                 ]
@@ -350,7 +355,12 @@ new context model =
                     []
                     [ Html.text "Chain (& Network)" ]
                 , UI.Kit.dropdown
-                    []
+                    [ E.onInput
+                        (\a ->
+                            GotUpdatedNewContext
+                                { context | chainId = a }
+                        )
+                    ]
                     (List.map
                         (\c ->
                             Html.option
@@ -370,6 +380,12 @@ new context model =
                 , UI.Kit.textField
                     [ A.type_ "text"
                     , A.placeholder "0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb"
+                    , A.required True
+                    , E.onInput
+                        (\a ->
+                            GotUpdatedNewContext
+                                { context | accountAddress = a }
+                        )
                     ]
                     []
                 ]
@@ -381,7 +397,13 @@ new context model =
                     []
                     [ Html.text "Notes" ]
                 , UI.Kit.textArea
-                    [ A.rows 3 ]
+                    [ A.rows 3
+                    , E.onInput
+                        (\a ->
+                            GotUpdatedNewContext
+                                { context | notes = a }
+                        )
+                    ]
                     []
                 ]
 

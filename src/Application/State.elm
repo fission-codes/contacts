@@ -1,16 +1,20 @@
 module State exposing (..)
 
 import Browser.Navigation as Nav
+import Contact
+import Contacts.AddressType exposing (AddressType(..))
+import Contacts.Wnfs
+import Json.Decode as Decode
 import Page exposing (Page(..))
 import Ports
 import Radix exposing (..)
 import RemoteData exposing (RemoteData(..))
 import Return exposing (return)
 import Routing
-import Tag
+import Tag exposing (Tag(..))
 import Url exposing (Url)
 import Webnative exposing (Artifact(..), DecodedResponse(..), State(..))
-import Wnfs
+import Wnfs exposing (Artifact(..))
 
 
 
@@ -23,7 +27,10 @@ init flags url navKey =
         { page = Routing.fromUrl url
         , navKey = navKey
         , url = url
-        , userData = Loading
+        , userData =
+            { contacts = Loading
+            , name = Nothing
+            }
         }
         (permissions
             |> Webnative.init
@@ -49,6 +56,15 @@ update msg =
 
         SignIn ->
             signIn
+
+        -----------------------------------------
+        -- Contacts
+        -----------------------------------------
+        AddNewContact a ->
+            addNewContact a
+
+        GotUpdatedNewContext a ->
+            gotUpdatedNewContext a
 
         -----------------------------------------
         -- Routing
@@ -82,26 +98,45 @@ gotWebnativeResponse response model =
         Webnative (Initialisation state) ->
             case usernameFromState state of
                 Just username ->
-                    -- TODO: Load data
-                    { contacts = []
-                    , name = username
+                    { contacts = Loading
+                    , name = Just username
                     }
-                        |> Success
+                        |> (\u -> { model | userData = u })
+                        |> Return.singleton
+                        |> Return.command
+                            (Ports.webnativeRequest Contacts.Wnfs.load)
+
+                Nothing ->
+                    { contacts = NotAsked
+                    , name = Nothing
+                    }
                         |> (\u -> { model | userData = u })
                         |> Return.singleton
 
-                Nothing ->
-                    Return.singleton { model | userData = NotAsked }
-
-        Webnative (NoArtifact _) ->
-            -- TODO
+        Webnative (Webnative.NoArtifact _) ->
             Return.singleton model
 
         -----------------------------------------
         -- 💾
         -----------------------------------------
+        Wnfs LoadedContacts (Utf8Content json) ->
+            json
+                |> Decode.decodeString (Decode.list Contact.contact)
+                |> Result.withDefault []
+                |> (\c ->
+                        mapUserData
+                            (\u -> { u | contacts = Success c })
+                            model
+                   )
+                |> Return.singleton
+
+        Wnfs SavedContacts _ ->
+            { tag = Tag.toString Untagged }
+                |> Wnfs.publish
+                |> Ports.webnativeRequest
+                |> return model
+
         Wnfs _ _ ->
-            -- TODO
             Return.singleton model
 
         -----------------------------------------
@@ -128,7 +163,59 @@ signIn model =
 
 
 
+-- CONTACTS
+
+
+addNewContact : Page.NewContext -> Manager
+addNewContact context model =
+    { address =
+        { accountAddress = context.accountAddress
+        , chainID = context.chainId
+        , addressType = Contacts.AddressType.toString BlockchainAddress
+        }
+    , createdAt = ""
+    , label = context.label
+    , modifiedAt = ""
+    , notes =
+        case String.trim context.notes of
+            "" ->
+                Nothing
+
+            notes ->
+                Just notes
+    }
+        |> List.singleton
+        |> List.append (RemoteData.withDefault [] model.userData.contacts)
+        |> (\c -> mapUserData (\u -> { u | contacts = Success c }) model)
+        |> Return.singleton
+        |> Return.command
+            (Nav.pushUrl model.navKey "../")
+        |> Return.effect_
+            (\newModel ->
+                newModel.userData.contacts
+                    |> RemoteData.withDefault []
+                    |> Contacts.Wnfs.save
+                    |> Ports.webnativeRequest
+            )
+
+
+gotUpdatedNewContext : Page.NewContext -> Manager
+gotUpdatedNewContext context model =
+    case model.page of
+        New _ ->
+            Return.singleton { model | page = New context }
+
+        _ ->
+            Return.singleton model
+
+
+
 -- 🛠
+
+
+mapUserData : (UserData -> UserData) -> Model -> Model
+mapUserData fn model =
+    { model | userData = fn model.userData }
 
 
 usernameFromState : Webnative.State -> Maybe String

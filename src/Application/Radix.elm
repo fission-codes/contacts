@@ -7,6 +7,7 @@ import Page exposing (Page)
 import RemoteData exposing (RemoteData(..))
 import Url exposing (Url)
 import Webnative
+import Webnative.Path as Path exposing (File, Path)
 
 
 
@@ -18,20 +19,20 @@ type alias Flags =
 
 
 
--- 🌱
+-- 🌳
 
 
 type alias Model =
     { navKey : Nav.Key
     , page : Page
     , url : Url
-    , userData : RemoteData String UserData
+    , userData : UserData
     }
 
 
 type alias UserData =
-    { contacts : List Contact
-    , name : String
+    { contacts : RemoteData String (List Contact)
+    , name : Maybe String
     }
 
 
@@ -40,9 +41,29 @@ appPermissions =
     { creator = "Fission", name = "Contacts" }
 
 
+fsPermissions : Webnative.FileSystemPermissions
+fsPermissions =
+    { public =
+        { directories = []
+        , files = []
+        }
+    , private =
+        { directories = []
+        , files = [ contactsPath ]
+        }
+    }
+
+
 permissions : Webnative.Permissions
 permissions =
-    { app = Just appPermissions, fs = Nothing }
+    { app = Just appPermissions
+    , fs = Just fsPermissions
+    }
+
+
+contactsPath : Path File
+contactsPath =
+    Path.file [ "Documents", "Contacts", "Index.json" ]
 
 
 
@@ -56,6 +77,11 @@ type Msg
       -----------------------------------------
     | GotWebnativeResponse Webnative.Response
     | SignIn
+      -----------------------------------------
+      -- Contacts
+      -----------------------------------------
+    | AddNewContact Page.NewContext
+    | GotUpdatedNewContext Page.NewContext
       -----------------------------------------
       -- Routing
       -----------------------------------------

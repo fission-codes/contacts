@@ -10,7 +10,7 @@
     "autoprefixer": "^10.2.5",
     "fission-kit": "fission-suite/kit#73326302ef203e6ec78ec4e377a8365125974af3",
     "postcss": "^8.2.15",
-    "quicktype": "https://ipfs.runfission.com/ipfs/bafybeiet7p4wkt2fmdeyx4n7la5t5jry77yb2xmoxvuuagtsvg4hrdr5hm/p/quicktype-elm.tar.gz",
+    "quicktype": "https://ipfs.runfission.com/ipfs/bafybeiecgq4haw5kbwhg3dgxbl44rk5pqhs45xpvecmmr2r43rfsneowua/p/Misc/quicktype-elm.tar.gz",
     "tailwindcss": "^2.1.2",
     "vite": "^2.3.4",
     "vite-plugin-elm": "^2.3.1"

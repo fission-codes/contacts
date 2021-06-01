@@ -7,7 +7,7 @@ devDependencies:
   autoprefixer: 10.2.5_postcss@8.2.15
   fission-kit: github.com/fission-suite/kit/73326302ef203e6ec78ec4e377a8365125974af3
   postcss: 8.2.15
-  quicktype: '@ipfs.runfission.com/ipfs/bafybeiet7p4wkt2fmdeyx4n7la5t5jry77yb2xmoxvuuagtsvg4hrdr5hm/p/quicktype-elm.tar.gz'
+  quicktype: '@ipfs.runfission.com/ipfs/bafybeiecgq4haw5kbwhg3dgxbl44rk5pqhs45xpvecmmr2r43rfsneowua/p/Misc/quicktype-elm.tar.gz'
   tailwindcss: 2.1.2_797cfc3ceddb49f111b184f6879a433f
   vite: 2.3.4
   vite-plugin-elm: 2.3.1_vite@2.3.4
@@ -2410,7 +2410,7 @@ packages:
   /string-to-stream/1.1.1:
     dependencies:
       inherits: 2.0.4
-      readable-stream: 2.3.7
+      readable-stream: 2.3.0
     dev: true
     resolution:
       integrity: sha512-QySF2+3Rwq0SdO3s7BAp4x+c3qsClpPQ6abAmb0DGViiSBAkT5kL6JT2iyzEVP+T1SmzHrQD1TwlP9QAHCc+Sw==
@@ -2888,7 +2888,7 @@ packages:
     dev: true
     resolution:
       integrity: sha512-Lhz8TLaYnxq/2ObqHDql8dX8CJi97oHxrjUcYtzKbbykPtVW9WB+poxI+NM2UIzsMgNCZTIf0AQwsjK5yMAqZw==
-  '@ipfs.runfission.com/ipfs/bafybeiet7p4wkt2fmdeyx4n7la5t5jry77yb2xmoxvuuagtsvg4hrdr5hm/p/quicktype-elm.tar.gz':
+  '@ipfs.runfission.com/ipfs/bafybeiecgq4haw5kbwhg3dgxbl44rk5pqhs45xpvecmmr2r43rfsneowua/p/Misc/quicktype-elm.tar.gz':
     dependencies:
       '@mark.probst/typescript-json-schema': 0.32.0
       '@mark.probst/unicode-properties': 1.1.0
@@ -2918,7 +2918,7 @@ packages:
     hasBin: true
     name: quicktype
     resolution:
-      tarball: 'https://ipfs.runfission.com/ipfs/bafybeiet7p4wkt2fmdeyx4n7la5t5jry77yb2xmoxvuuagtsvg4hrdr5hm/p/quicktype-elm.tar.gz'
+      tarball: 'https://ipfs.runfission.com/ipfs/bafybeiecgq4haw5kbwhg3dgxbl44rk5pqhs45xpvecmmr2r43rfsneowua/p/Misc/quicktype-elm.tar.gz'
     version: 15.0.0
   '@ipfs.runfission.com/ipfs/bafybeigx6q4aezve7my76s5vvfuiinbxtepapqvmjf2jbgrozrut6cjape/p/ipfs-message-port-client.tar.gz':
     dependencies:
@@ -2959,7 +2959,7 @@ specifiers:
   autoprefixer: ^10.2.5
   fission-kit: fission-suite/kit#73326302ef203e6ec78ec4e377a8365125974af3
   postcss: ^8.2.15
-  quicktype: 'https://ipfs.runfission.com/ipfs/bafybeiet7p4wkt2fmdeyx4n7la5t5jry77yb2xmoxvuuagtsvg4hrdr5hm/p/quicktype-elm.tar.gz'
+  quicktype: 'https://ipfs.runfission.com/ipfs/bafybeiecgq4haw5kbwhg3dgxbl44rk5pqhs45xpvecmmr2r43rfsneowua/p/Misc/quicktype-elm.tar.gz'
   tailwindcss: ^2.1.2
   vite: ^2.3.4
   vite-plugin-elm: ^2.3.1
