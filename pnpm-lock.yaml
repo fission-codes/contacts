@@ -5,13 +5,13 @@ dependencies:
 devDependencies:
   '@rollup/plugin-json': 4.1.0
   '@tailwindcss/forms': 0.3.2_tailwindcss@2.1.2
-  autoprefixer: 10.2.5_postcss@8.2.15
+  autoprefixer: 10.2.6_postcss@8.3.0
   fission-kit: github.com/fission-suite/kit/73326302ef203e6ec78ec4e377a8365125974af3
-  postcss: 8.2.15
+  postcss: 8.3.0
   quicktype: '@ipfs.runfission.com/ipfs/bafybeiecgq4haw5kbwhg3dgxbl44rk5pqhs45xpvecmmr2r43rfsneowua/p/Misc/quicktype-elm.tar.gz'
-  tailwindcss: 2.1.2_797cfc3ceddb49f111b184f6879a433f
-  vite: 2.3.4
-  vite-plugin-elm: 2.3.1_vite@2.3.4
+  tailwindcss: 2.1.2_6daa0ece57b4377652e73c9c66c3b94c
+  vite: 2.3.6
+  vite-plugin-elm: 2.3.1_vite@2.3.6
 lockfileVersion: 5.2
 packages:
   /@fullhuman/postcss-purgecss/3.1.3:
@@ -131,7 +131,7 @@ packages:
   /@tailwindcss/forms/0.3.2_tailwindcss@2.1.2:
     dependencies:
       mini-svg-data-uri: 1.3.3
-      tailwindcss: 2.1.2_797cfc3ceddb49f111b184f6879a433f
+      tailwindcss: 2.1.2_6daa0ece57b4377652e73c9c66c3b94c
     dev: true
     peerDependencies:
       tailwindcss: '>=2.0.0'
@@ -145,10 +145,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-5tXH6Bx/kNGd3MgffdmP4dy2Z+G4eaXw0SE81Tq3BNadtnMR5/ySMzX4SLEzHJzSmPNn4HIdpQsBvXMUykr58w==
-  /@types/node/15.6.1:
+  /@types/node/15.6.2:
     dev: false
     resolution:
-      integrity: sha512-7EIraBEyRHEe7CH+Fm1XvgqU6uwZN8Q7jppJGcqjROMT29qhAuuOxYB1uEY5UMYQKEmA5D+5tBnhdaPXSsLONA==
+      integrity: sha512-dxcOx8801kMo3KlU+C+/ctWrzREAH7YvoF3aoVpRdqgs+Kf7flp+PJDN/EX5bME3suDUZHsxes9hpvBmzYlWbA==
   /@ungap/global-this/0.4.4:
     dev: false
     resolution:
@@ -247,14 +247,14 @@ packages:
       node: '>= 4.0.0'
     resolution:
       integrity: sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==
-  /autoprefixer/10.2.5_postcss@8.2.15:
+  /autoprefixer/10.2.6_postcss@8.3.0:
     dependencies:
       browserslist: 4.16.6
-      caniuse-lite: 1.0.30001228
+      caniuse-lite: 1.0.30001233
       colorette: 1.2.2
-      fraction.js: 4.1.0
+      fraction.js: 4.1.1
       normalize-range: 0.1.2
-      postcss: 8.2.15
+      postcss: 8.3.0
       postcss-value-parser: 4.1.0
     dev: true
     engines:
@@ -263,7 +263,7 @@ packages:
     peerDependencies:
       postcss: ^8.1.0
     resolution:
-      integrity: sha512-7H4AJZXvSsn62SqZyJCP+1AWwOuoYpUfK6ot9vm0e87XD6mT8lDywc9D9OTJPMULyGcvmIxzTAMeG2Cc+YX+fA==
+      integrity: sha512-8lChSmdU6dCNMCQopIf4Pe5kipkAGj/fvTMslCsih0uHpOrXOPUEVOmYMMqmw3cekQkSD7EhIeuYl5y0BLdKqg==
   /available-typed-arrays/1.0.4:
     dev: false
     engines:
@@ -361,7 +361,7 @@ packages:
       integrity: sha512-lv4M2Z6RKJpyJijJzBQL5MNssS7i8yedl+QkhnLCyPtgNGNSXv1KthzUnye9NlRAtBAI80X6S9i+vK09Rzjcvg==
   /browserslist/4.16.6:
     dependencies:
-      caniuse-lite: 1.0.30001228
+      caniuse-lite: 1.0.30001233
       colorette: 1.2.2
       electron-to-chromium: 1.3.734
       escalade: 3.1.1
@@ -421,10 +421,10 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==
-  /caniuse-lite/1.0.30001228:
+  /caniuse-lite/1.0.30001233:
     dev: true
     resolution:
-      integrity: sha512-QQmLOGJ3DEgokHbMSA8cj2a+geXqmnpyOFT0lhQV6P3/YOJvGDEwoedcwxEQ30gJIwIIunHIicunJ2rzK5gB2A==
+      integrity: sha512-BmkbxLfStqiPA7IEzQpIk0UFZFf3A4E6fzjPJ6OR+bFC2L8ES9J8zGA/asoi47p8XDVkev+WJo2I2Nc8c/34Yg==
   /chalk/2.4.2:
     dependencies:
       ansi-styles: 3.2.1
@@ -775,12 +775,12 @@ packages:
       node: '>= 0.4'
     resolution:
       integrity: sha512-QCOllgZJtaUo9miYBcLChTUaHNjJF3PYs1VidD7AwiEj1kYxKeQTctLAezAOH5ZKRH0g2IgPn6KwB4IT8iRpvA==
-  /esbuild/0.11.23:
+  /esbuild/0.12.5:
     dev: true
     hasBin: true
     requiresBuild: true
     resolution:
-      integrity: sha512-iaiZZ9vUF5wJV8ob1tl+5aJTrwDczlvGP0JoMmnpC2B0ppiMCu8n8gmy5ZTGl5bcG081XBVn+U+jP+mPFm5T5Q==
+      integrity: sha512-vcuP53pA5XiwUU4FnlXM+2PnVjTfHGthM7uP1gtp+9yfheGvFFbq/KyuESThmtoHPUrfZH5JpxGVJIFDVD1Egw==
   /escalade/3.1.1:
     dev: true
     engines:
@@ -971,10 +971,10 @@ packages:
   /foreach/2.0.5:
     resolution:
       integrity: sha1-C+4AUBiusmDQo6865ljdATbsG5k=
-  /fraction.js/4.1.0:
+  /fraction.js/4.1.1:
     dev: true
     resolution:
-      integrity: sha512-o9lSKpK0TDqDwTL24Hxqi6I99s942l6TYkfl6WvGWgLOIFz/YonSGKfiSeMadoiNvTfqnfOa9mjb5SGVbBK9/w==
+      integrity: sha512-MHOhvvxHTfRFpF1geTK9czMIZ6xclsEor2wkIGYYq+PxcQqT7vStJqjhe6S1TenZrMZzo+wlqOufBDVepUEgPg==
   /fs-extra/9.1.0:
     dependencies:
       at-least-node: 1.0.0
@@ -2031,9 +2031,9 @@ packages:
       node: '>=10.0'
     resolution:
       integrity: sha512-gWnoWQXKFw65Hk/mi2+WTQTHdPD5UJdDXZmX073EY/B3BWnYjO4F4t0VneTCnCGQ5E5GsCdMkzPaTXwl3r5dJw==
-  /postcss-nested/5.0.5_postcss@8.2.15:
+  /postcss-nested/5.0.5_postcss@8.3.0:
     dependencies:
-      postcss: 8.2.15
+      postcss: 8.3.0
       postcss-selector-parser: 6.0.6
     dev: true
     engines:
@@ -2079,6 +2079,16 @@ packages:
       node: ^10 || ^12 || >=14
     resolution:
       integrity: sha512-2zO3b26eJD/8rb106Qu2o7Qgg52ND5HPjcyQiK2B98O388h43A448LCslC0dI2P97wCAQRJsFvwTRcXxTKds+Q==
+  /postcss/8.3.0:
+    dependencies:
+      colorette: 1.2.2
+      nanoid: 3.1.23
+      source-map-js: 0.6.2
+    dev: true
+    engines:
+      node: ^10 || ^12 || >=14
+    resolution:
+      integrity: sha512-+ogXpdAjWGa+fdYY5BQ96V/6tAo+TdSSIMP5huJBIygdWwKtVoB5JWZ7yUd4xZ8r+8Kvvx4nyg/PQ071H4UtcQ==
   /prelude-ls/1.1.2:
     dev: true
     engines:
@@ -2112,7 +2122,7 @@ packages:
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
       '@types/long': 4.0.1
-      '@types/node': 15.6.1
+      '@types/node': 15.6.2
       long: 4.0.0
     dev: false
     hasBin: true
@@ -2363,6 +2373,12 @@ packages:
     dev: true
     resolution:
       integrity: sha1-pNprY1/8zMoz9w0Xy5JZLeleVXo=
+  /source-map-js/0.6.2:
+    dev: true
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha512-/3GptzWzu0+0MBQFrDKzw/DvvMTUORvgY6k6jd/VS6iCR4RDTKWH6v6WPwQoUO8667uQEf9Oe38DxAYWY5F/Ug==
   /source-map/0.5.7:
     dev: true
     engines:
@@ -2417,7 +2433,7 @@ packages:
   /string-to-stream/1.1.1:
     dependencies:
       inherits: 2.0.4
-      readable-stream: 2.3.0
+      readable-stream: 2.3.7
     dev: true
     resolution:
       integrity: sha512-QySF2+3Rwq0SdO3s7BAp4x+c3qsClpPQ6abAmb0DGViiSBAkT5kL6JT2iyzEVP+T1SmzHrQD1TwlP9QAHCc+Sw==
@@ -2522,10 +2538,10 @@ packages:
       node: '>=4.0.0'
     resolution:
       integrity: sha512-zTvf0mcggrGeTe/2jJ6ECkJHAQPIYEwDoqsiqBjI24mvRmQbInK5jq33fyypaCBxX08hMkfmdOqj6haT33EqWw==
-  /tailwindcss/2.1.2_797cfc3ceddb49f111b184f6879a433f:
+  /tailwindcss/2.1.2_6daa0ece57b4377652e73c9c66c3b94c:
     dependencies:
       '@fullhuman/postcss-purgecss': 3.1.3
-      autoprefixer: 10.2.5_postcss@8.2.15
+      autoprefixer: 10.2.6_postcss@8.3.0
       bytes: 3.1.0
       chalk: 4.1.1
       chokidar: 3.5.1
@@ -2543,10 +2559,10 @@ packages:
       normalize-path: 3.0.0
       object-hash: 2.1.1
       parse-glob: 3.0.4
-      postcss: 8.2.15
+      postcss: 8.3.0
       postcss-functions: 3.0.0
       postcss-js: 3.0.3
-      postcss-nested: 5.0.5_postcss@8.2.15
+      postcss-nested: 5.0.5_postcss@8.3.0
       postcss-selector-parser: 6.0.6
       postcss-value-parser: 4.1.0
       pretty-hrtime: 1.0.3
@@ -2709,20 +2725,20 @@ packages:
     dev: false
     resolution:
       integrity: sha512-cXEIW6cfr15lFv563k4GuVuW/fiwjknytD37jIOLSdSWuOI6WnO/oKwmP2FQTU2l01LP8/M5TSAJpzUaGe3uWg==
-  /vite-plugin-elm/2.3.1_vite@2.3.4:
+  /vite-plugin-elm/2.3.1_vite@2.3.6:
     dependencies:
       elm-esm: 1.1.2
       node-elm-compiler: 5.0.6
-      vite: 2.3.4
+      vite: 2.3.6
     dev: true
     peerDependencies:
       vite: ^2.0.0
     resolution:
       integrity: sha512-Sr78/+YveXq1NjpTIo/ei1XW3P5UFTC8GbAAJEN0HxdiMztNZpj2OHTJtZWnBNltMhmEK42XmMoj+Q7lTqXHiA==
-  /vite/2.3.4:
+  /vite/2.3.6:
     dependencies:
-      esbuild: 0.11.23
-      postcss: 8.2.15
+      esbuild: 0.12.5
+      postcss: 8.3.0
       resolve: 1.20.0
       rollup: 2.48.0
     dev: true
@@ -2732,7 +2748,7 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
     resolution:
-      integrity: sha512-7orxrF65+Q5n/sMCnO91S8OS0gkPJ7g+y3bLlc7CPCXVswK8to1T8YycCk9SZh+AcIc0TuN6YajWTBFS5atMNA==
+      integrity: sha512-fsEpNKDHgh3Sn66JH06ZnUBnIgUVUtw6ucDhlOj1CEqxIkymU25yv1/kWDPlIjyYHnalr0cN6V+zzUJ+fmWHYw==
   /vlq/0.2.3:
     dev: true
     resolution:
@@ -2967,13 +2983,13 @@ packages:
 specifiers:
   '@rollup/plugin-json': ^4.1.0
   '@tailwindcss/forms': ^0.3.2
-  autoprefixer: ^10.2.5
+  autoprefixer: ^10.2.6
   copy-to-clipboard: ^3.3.1
   fission-kit: fission-suite/kit#73326302ef203e6ec78ec4e377a8365125974af3
-  postcss: ^8.2.15
+  postcss: ^8.3.0
   quicktype: 'https://ipfs.runfission.com/ipfs/bafybeiecgq4haw5kbwhg3dgxbl44rk5pqhs45xpvecmmr2r43rfsneowua/p/Misc/quicktype-elm.tar.gz'
   tailwindcss: ^2.1.2
-  vite: ^2.3.4
+  vite: ^2.3.6
   vite-plugin-elm: ^2.3.1
   webnative: ^0.24.1
   webnative-elm: ^6.0.0

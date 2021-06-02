@@ -8,12 +8,12 @@
   "devDependencies": {
     "@rollup/plugin-json": "^4.1.0",
     "@tailwindcss/forms": "^0.3.2",
-    "autoprefixer": "^10.2.5",
+    "autoprefixer": "^10.2.6",
     "fission-kit": "fission-suite/kit#73326302ef203e6ec78ec4e377a8365125974af3",
-    "postcss": "^8.2.15",
+    "postcss": "^8.3.0",
     "quicktype": "https://ipfs.runfission.com/ipfs/bafybeiecgq4haw5kbwhg3dgxbl44rk5pqhs45xpvecmmr2r43rfsneowua/p/Misc/quicktype-elm.tar.gz",
     "tailwindcss": "^2.1.2",
-    "vite": "^2.3.4",
+    "vite": "^2.3.6",
     "vite-plugin-elm": "^2.3.1"
   }
 }

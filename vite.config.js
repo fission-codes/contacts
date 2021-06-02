@@ -15,6 +15,7 @@ elm.transform = function(...args) {
 
 
 module.exports = {
+
   plugins: [
     elm
   ],
@@ -23,6 +24,8 @@ module.exports = {
 
   // Build
   build: {
-    outDir: "build"
-  }
+    outDir: "build",
+    target: "es2020"
+  },
+
 }

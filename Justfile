@@ -28,6 +28,9 @@ gen := "src/Generated"
 		--config vite.config.js \
 		--outDir ../build
 
+	mkdir -p build/new/
+	cp build/index.html build/new/index.html
+
 
 
 # Pieces
