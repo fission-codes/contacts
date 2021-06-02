@@ -47,6 +47,10 @@ gen := "src/Generated"
 	./node_modules/.bin/quicktype -s schema -o src/Generated/Contact.elm --module Contact src/Schemas/Dawn/Contact.json
 
 
+@validate-elm:
+	elm make src/Application/Main.elm --output=/dev/null
+
+
 
 # Development
 # ===========

@@ -243,7 +243,11 @@ index contacts model =
                                         , "no-hover:inline-block"
                                         ]
                                         [ A.title "Copy address"
-                                        , E.onClick (CopyToClipboard contact.address.accountAddress)
+                                        , { text = contact.address.accountAddress
+                                          , notification = Just "📋 Copied blockchain address to clipboard"
+                                          }
+                                            |> CopyToClipboard
+                                            |> E.onClick
                                         ]
                                         [ Icons.clipboardCopy [ S.class "w-4" ]
                                         ]

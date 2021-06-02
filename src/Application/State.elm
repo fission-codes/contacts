@@ -92,9 +92,9 @@ subscriptions _ =
 -- 🐚
 
 
-copyToClipboard : String -> Manager
-copyToClipboard text model =
-    text
+copyToClipboard : { notification : Maybe String, text : String } -> Manager
+copyToClipboard params model =
+    params
         |> Ports.copyToClipboard
         |> return model
 

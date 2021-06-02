@@ -7,7 +7,7 @@ import Webnative
 -- 📣
 
 
-port copyToClipboard : String -> Cmd msg
+port copyToClipboard : { notification : Maybe String, text : String } -> Cmd msg
 
 
 port webnativeRequest : Webnative.Request -> Cmd msg

@@ -11,12 +11,14 @@ import { Elm } from "../Application/Main.elm"
 const app = Elm.Main.init({})
 
 
-app.ports.copyToClipboard.subscribe(text => {
+app.ports.copyToClipboard.subscribe(({ notification, text }) => {
   copy(text)
 
-  if ("Notification" in window) Notification.requestPermission().then(permission => {
-    if (permission === "granted") new Notification("Copied to clipboard")
-  })
+  if (notification && "Notification" in window) {
+    Notification.requestPermission().then(permission => {
+      if (permission === "granted") new Notification(notification)
+    })
+  }
 })
 
 
