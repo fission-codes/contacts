@@ -4,7 +4,9 @@ module Tag exposing (..)
 type Tag
     = Untagged
       --
+    | LoadedBlockchains
     | LoadedContacts
+    | SavedBlockchains
     | SavedContacts
 
 
@@ -15,8 +17,14 @@ toString tag =
             "Untagged"
 
         --
+        LoadedBlockchains ->
+            "LoadedBlockchains"
+
         LoadedContacts ->
             "LoadedContacts"
+
+        SavedBlockchains ->
+            "SavedBlockchains"
 
         SavedContacts ->
             "SavedContacts"
@@ -29,8 +37,14 @@ fromString string =
             Ok Untagged
 
         --
+        "LoadedBlockchains" ->
+            Ok LoadedBlockchains
+
         "LoadedContacts" ->
             Ok LoadedContacts
+
+        "SavedBlockchains" ->
+            Ok SavedBlockchains
 
         "SavedContacts" ->
             Ok SavedContacts

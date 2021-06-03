@@ -2,6 +2,7 @@ module Radix exposing (..)
 
 import Browser
 import Browser.Navigation as Nav
+import ChainID exposing (ChainID)
 import Contact exposing (Contact)
 import Page exposing (Page)
 import RemoteData exposing (RemoteData(..))
@@ -31,7 +32,8 @@ type alias Model =
 
 
 type alias UserData =
-    { contacts : RemoteData String (List Contact)
+    { blockchainIds : RemoteData String (List ChainID)
+    , contacts : RemoteData String (List Contact)
     , name : Maybe String
     }
 
@@ -48,8 +50,8 @@ fsPermissions =
         , files = []
         }
     , private =
-        { directories = []
-        , files = [ contactsPath ]
+        { directories = [ Path.directory [ "Documents", "Contacts" ] ]
+        , files = []
         }
     }
 
@@ -63,7 +65,12 @@ permissions =
 
 contactsPath : Path File
 contactsPath =
-    Path.file [ "Documents", "Contacts", "Index.json" ]
+    Path.file [ "Documents", "Contacts", "Library.json" ]
+
+
+blockchainsPath : Path File
+blockchainsPath =
+    Path.file [ "Documents", "Contacts", "Blockchain Networks.json" ]
 
 
 

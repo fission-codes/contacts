@@ -14,7 +14,7 @@ type Page
 
 type alias NewContext =
     { accountAddress : String
-    , chainId : String
+    , chainID : Maybe String
     , label : String
     , notes : String
     }
@@ -23,11 +23,7 @@ type alias NewContext =
 new : NewContext
 new =
     { accountAddress = ""
-    , chainId =
-        CAIP.chainIdsList
-            |> List.head
-            |> Maybe.map CAIP.chainIdToString
-            |> Maybe.withDefault ""
+    , chainID = Nothing
     , label = ""
     , notes = ""
     }

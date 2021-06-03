@@ -1,10 +1,13 @@
 module State exposing (..)
 
 import Browser.Navigation as Nav
+import CAIP
+import ChainID
 import Contact
 import Contacts.AddressType exposing (AddressType(..))
 import Contacts.Wnfs
 import Json.Decode as Decode
+import Maybe.Extra as Maybe
 import Page exposing (Page(..))
 import Ports
 import Radix exposing (..)
@@ -18,7 +21,7 @@ import Wnfs exposing (Artifact(..))
 
 
 
--- 🌱
+-- 🌳
 
 
 init : Flags -> Url -> Nav.Key -> ( Model, Cmd Msg )
@@ -28,7 +31,8 @@ init flags url navKey =
         , navKey = navKey
         , url = url
         , userData =
-            { contacts = Loading
+            { blockchainIds = Loading
+            , contacts = Loading
             , name = Nothing
             }
         }
@@ -108,16 +112,20 @@ gotWebnativeResponse response model =
         Webnative (Initialisation state) ->
             case usernameFromState state of
                 Just username ->
-                    { contacts = Loading
+                    { blockchainIds = Loading
+                    , contacts = Loading
                     , name = Just username
                     }
                         |> (\u -> { model | userData = u })
                         |> Return.singleton
                         |> Return.command
                             (Ports.webnativeRequest Contacts.Wnfs.load)
+                        |> Return.command
+                            (Ports.webnativeRequest Contacts.Wnfs.loadBlockchains)
 
                 Nothing ->
-                    { contacts = NotAsked
+                    { blockchainIds = NotAsked
+                    , contacts = NotAsked
                     , name = Nothing
                     }
                         |> (\u -> { model | userData = u })
@@ -129,6 +137,17 @@ gotWebnativeResponse response model =
         -----------------------------------------
         -- 💾
         -----------------------------------------
+        Wnfs LoadedBlockchains (Utf8Content json) ->
+            json
+                |> Decode.decodeString (Decode.list ChainID.chainID)
+                |> Result.withDefault []
+                |> (\c ->
+                        mapUserData
+                            (\u -> { u | blockchainIds = Success c })
+                            model
+                   )
+                |> Return.singleton
+
         Wnfs LoadedContacts (Utf8Content json) ->
             json
                 |> Decode.decodeString (Decode.list Contact.contact)
@@ -139,6 +158,12 @@ gotWebnativeResponse response model =
                             model
                    )
                 |> Return.singleton
+
+        Wnfs SavedBlockchains _ ->
+            { tag = Tag.toString Untagged }
+                |> Wnfs.publish
+                |> Ports.webnativeRequest
+                |> return model
 
         Wnfs SavedContacts _ ->
             { tag = Tag.toString Untagged }
@@ -160,8 +185,24 @@ gotWebnativeResponse response model =
             Return.singleton model
 
         WnfsError err ->
-            -- Wnfs.error err
-            Return.singleton model
+            case ( response.tag, err ) of
+                ( "LoadedContacts", Wnfs.JavascriptError "Path does not exist" ) ->
+                    model
+                        |> mapUserData (\u -> { u | contacts = Success [] })
+                        |> Return.singleton
+                        |> Return.command
+                            (Ports.webnativeRequest Contacts.Wnfs.init)
+
+                ( "LoadedBlockchains", Wnfs.JavascriptError "Path does not exist" ) ->
+                    model
+                        |> mapUserData (\u -> { u | blockchainIds = Success CAIP.defaultChainIds })
+                        |> Return.singleton
+                        |> Return.command
+                            (Ports.webnativeRequest Contacts.Wnfs.initBlockchains)
+
+                _ ->
+                    -- Wnfs.error err
+                    Return.singleton model
 
 
 signIn : Manager
@@ -178,9 +219,22 @@ signIn model =
 
 addNewContact : Page.NewContext -> Manager
 addNewContact context model =
+    let
+        chainIds =
+            RemoteData.withDefault
+                CAIP.defaultChainIds
+                model.userData.blockchainIds
+    in
     { address =
         { accountAddress = context.accountAddress
-        , chainID = context.chainId
+        , chainID =
+            context.chainID
+                |> Maybe.orElse
+                    (chainIds
+                        |> List.head
+                        |> Maybe.map CAIP.chainIdToString
+                    )
+                |> Maybe.withDefault ""
         , addressType = Contacts.AddressType.toString BlockchainAddress
         }
     , createdAt = ""

@@ -44,6 +44,7 @@ gen := "src/Generated"
 @translate-schemas:
 	echo "🔮  Translating schemas into Elm code"
 	mkdir -p src/Generated
+	./node_modules/.bin/quicktype -s schema -o src/Generated/ChainID.elm --module ChainID src/Schemas/Dawn/ChainID.json
 	./node_modules/.bin/quicktype -s schema -o src/Generated/Contact.elm --module Contact src/Schemas/Dawn/Contact.json
 
 

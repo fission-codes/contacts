@@ -4,6 +4,7 @@ import CAIP
 import Chunky exposing (..)
 import Contact
 import Dict
+import Dict.Extra as Dict
 import Heroicons.Solid as Icons
 import Html exposing (Html)
 import Html.Attributes as A
@@ -61,7 +62,7 @@ view model =
                         index contacts model
 
                     New context ->
-                        new context model
+                        new model.userData context model
 
             Failure error ->
                 -- TODO
@@ -212,14 +213,11 @@ index contacts model =
                                 , chunk
                                     Html.div
                                     [ "text-neutral-4"
+                                    , "truncate"
                                     , "w-5/12"
                                     ]
                                     []
-                                    [ CAIP.chainIds
-                                        |> Dict.get contact.address.chainID
-                                        |> Maybe.map .label
-                                        |> Maybe.withDefault ""
-                                        |> Html.text
+                                    [ Html.text contact.address.accountAddress
                                     ]
                                 , chunk
                                     Html.div
@@ -284,7 +282,7 @@ index contacts model =
 -- NEW
 
 
-new context model =
+new userData context model =
     mainLayout
         [ UI.Kit.bgBackButton { href = "../" }
         , Html.div [] [ UI.Kit.backButton { href = "../" } ]
@@ -364,16 +362,28 @@ new context model =
                     [ E.onInput
                         (\a ->
                             GotUpdatedNewContext
-                                { context | chainId = a }
+                                { context | chainID = Just a }
                         )
                     ]
-                    (List.map
-                        (\c ->
-                            Html.option
-                                [ A.value (CAIP.chainIdToString c) ]
-                                [ Html.text c.label ]
-                        )
-                        CAIP.chainIdsList
+                    (userData.blockchainIds
+                        |> RemoteData.withDefault CAIP.defaultChainIds
+                        |> Dict.groupBy .group
+                        |> Dict.toList
+                        |> List.sortBy Tuple.first
+                        |> List.map
+                            (\( label, group ) ->
+                                group
+                                    |> List.map
+                                        (\c ->
+                                            Html.option
+                                                [ A.value (CAIP.chainIdToString c)
+                                                , A.selected False -- TODO
+                                                ]
+                                                [ Html.text c.label ]
+                                        )
+                                    |> Html.optgroup
+                                        [ A.attribute "label" label ]
+                            )
                     )
                 ]
 

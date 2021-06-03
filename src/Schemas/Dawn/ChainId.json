@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "title": "Chain ID schema",
+  "description": "Represents a blockchain id according to the following spec: https://github.com/ChainAgnostic/CAIPs/blob/master/CAIPs/caip-2.md",
+  "default": {},
+  "examples": [
+    {
+      "namespace": "eip155",
+      "reference": "1",
+      "label": "Ethereum mainnet",
+      "group": "Main networks"
+    }
+  ],
+  "required": [
+    "namespace",
+    "reference",
+    "label",
+    "group"
+  ],
+  "properties": {
+    "namespace": {
+      "$id": "#/properties/namespace",
+      "type": "string",
+      "title": "Namespace",
+      "description": "Each namespace covers a class of similar blockchains. Format: `[-a-z0-9]{3,16}`, see spec for more info.",
+      "default": "",
+      "examples": [
+        "eip155"
+      ]
+    },
+    "reference": {
+      "$id": "#/properties/reference",
+      "type": "string",
+      "title": "Reference",
+      "description": "A reference is a way to identify a blockchain within a given namespace. Format: `[-a-zA-Z0-9]{1,47}`, see spec for more info.",
+      "default": "",
+      "examples": [
+        "1"
+      ]
+    },
+    "label": {
+      "$id": "#/properties/label",
+      "type": "string",
+      "title": "Label",
+      "description": "A label for this item.",
+      "default": "",
+      "examples": [
+        "Ethereum mainnet"
+      ]
+    },
+    "group": {
+      "$id": "#/properties/group",
+      "type": "string",
+      "title": "Group",
+      "description": "A group for this item.",
+      "default": "",
+      "examples": [
+        "Main networks"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,20 +1,11 @@
 module CAIP exposing (..)
 
+import ChainID exposing (ChainID)
 import Dict exposing (Dict)
 
 
 
 -- 🌳
-
-
-type alias ChainId =
-    { namespace : String
-    , reference : String
-
-    -- Extra
-    , label : String
-    , group : String
-    }
 
 
 mainNet =
@@ -29,8 +20,8 @@ testNet =
 -- 🛠
 
 
-chainIdsList : List ChainId
-chainIdsList =
+defaultChainIds : List ChainID
+defaultChainIds =
     [ -----------------------------------------
       -- EVM
       -----------------------------------------
@@ -52,13 +43,6 @@ chainIdsList =
     ]
 
 
-chainIds : Dict String ChainId
-chainIds =
-    chainIdsList
-        |> List.map (\a -> Tuple.pair (chainIdToString a) a)
-        |> Dict.fromList
-
-
-chainIdToString : ChainId -> String
+chainIdToString : ChainID -> String
 chainIdToString { namespace, reference } =
     namespace ++ ":" ++ reference
