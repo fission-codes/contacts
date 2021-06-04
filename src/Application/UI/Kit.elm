@@ -213,10 +213,15 @@ h1 =
         Html.h1
         [ "font-display"
         , "font-medium"
-        , "text-[90px]"
+        , "mb-3"
+        , "text-6xl"
         , "text-white"
         , "tracking-tight"
         , "uppercase"
+
+        -- Responsive
+        -------------
+        , "md:text-[90px]"
         ]
 
 

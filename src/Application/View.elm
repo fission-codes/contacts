@@ -99,6 +99,8 @@ notAuthorised =
         , "justify-center"
         , "pb-8"
         , "pt-5"
+        , "px-4"
+        , "text-center"
         ]
         []
         [ UI.Kit.h1
