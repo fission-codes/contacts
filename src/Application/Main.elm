@@ -28,6 +28,6 @@ main =
 
 view : Model -> Browser.Document Msg
 view model =
-    { title = "Address Book"
+    { title = "Contacts"
     , body = [ View.view model ]
     }

@@ -348,6 +348,7 @@ indexContact context model idx contact =
                 -- Responsive
                 -------------
                 , "md:-mx-10"
+                , "md:px-8"
 
                 -- Dark mode
                 ------------
