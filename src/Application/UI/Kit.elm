@@ -37,9 +37,13 @@ bgBackButton { href } =
         Html.div
         [ "absolute"
         , "mr-10"
-        , "mt-12"
+        , "mt-10"
         , "right-full"
         , "top-0"
+
+        -- Responsive
+        -------------
+        , "md:mt-12"
         ]
         []
         [ chunk
@@ -90,6 +94,42 @@ backButtonNodes =
         []
         [ Html.text "Back to list" ]
     ]
+
+
+button element =
+    chunk
+        element
+        [ "bg-neutral-4"
+        , "border-0"
+        , "font-medium"
+        , "inline-flex"
+        , "items-center"
+        , "justify-center"
+        , "rounded"
+        , "text-white"
+
+        --
+        , "focus:bg-neutral-3"
+        , "focus:outline-none"
+        , "focus:ring-transparent"
+
+        -- Dark mode
+        ------------
+        , "dark:bg-neutral-2"
+        , "dark:text-neutral-5"
+
+        --
+        , "dark:focus:bg-neutral-3"
+        ]
+
+
+buttonIcon icon =
+    chunk
+        Html.span
+        [ "mr-1" ]
+        []
+        [ icon [ S.class "w-3" ]
+        ]
 
 
 dropdown attributes nodes =

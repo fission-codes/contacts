@@ -8,8 +8,14 @@ import CAIP
 
 
 type Page
-    = Index
+    = Index IndexContext
     | New NewContext
+
+
+type alias IndexContext =
+    { confirmRemove : Bool
+    , selectedContact : Maybe Int
+    }
 
 
 type alias NewContext =
@@ -17,6 +23,13 @@ type alias NewContext =
     , chainID : Maybe String
     , label : String
     , notes : String
+    }
+
+
+index : IndexContext
+index =
+    { confirmRemove = False
+    , selectedContact = Nothing
     }
 
 

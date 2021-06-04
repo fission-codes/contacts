@@ -17,6 +17,8 @@
             "elm/svg": "1.0.1",
             "elm/url": "1.0.0",
             "elm-community/dict-extra": "2.4.0",
+            "elm-community/html-extra": "3.4.0",
+            "elm-community/list-extra": "8.3.0",
             "elm-community/maybe-extra": "5.2.0",
             "fission-suite/webnative-elm": "6.0.0",
             "jasonliang-dev/elm-heroicons": "1.0.3",

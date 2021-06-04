@@ -9,6 +9,8 @@ import Heroicons.Solid as Icons
 import Html exposing (Html)
 import Html.Attributes as A
 import Html.Events as E
+import Html.Events.Extra as E
+import Html.Extra as Html
 import Loaders
 import Page exposing (Page(..))
 import Radix exposing (Model, Msg(..))
@@ -29,7 +31,20 @@ view model =
         ------------
         , "dark:text-neutral-6"
         ]
-        []
+        (case model.page of
+            Index context ->
+                if context.confirmRemove then
+                    { context | confirmRemove = False }
+                        |> GotUpdatedIndexContext
+                        |> E.onClick
+                        |> List.singleton
+
+                else
+                    []
+
+            _ ->
+                []
+        )
         (case model.userData.contacts of
             NotAsked ->
                 [ notAuthorised ]
@@ -58,8 +73,8 @@ view model =
 
             Success contacts ->
                 case model.page of
-                    Index ->
-                        index contacts model
+                    Index context ->
+                        index contacts context model
 
                     New context ->
                         new model.userData context model
@@ -129,7 +144,7 @@ notAuthorised =
 -- INDEX
 
 
-index contacts model =
+index contacts context model =
     mainLayout
         [ UI.Kit.h2
             []
@@ -189,69 +204,8 @@ index contacts model =
                 contacts
                     |> List.sortBy
                         .label
-                    |> List.map
-                        (\contact ->
-                            chunk
-                                Html.div
-                                [ "border-b"
-                                , "border-neutral-6"
-                                , "flex"
-                                , "group"
-                                , "items-center"
-                                , "py-3"
-
-                                -- Dark mode
-                                ------------
-                                , "dark:border-darkness-above"
-                                ]
-                                []
-                                [ chunk
-                                    Html.div
-                                    [ "w-5/12" ]
-                                    []
-                                    [ Html.text contact.label ]
-                                , chunk
-                                    Html.div
-                                    [ "text-neutral-4"
-                                    , "truncate"
-                                    , "w-5/12"
-                                    ]
-                                    []
-                                    [ Html.text contact.address.accountAddress
-                                    ]
-                                , chunk
-                                    Html.div
-                                    [ "flex"
-                                    , "items-center"
-                                    , "justify-end"
-                                    , "text-neutral-4"
-                                    , "w-2/12"
-                                    ]
-                                    []
-                                    [ chunk
-                                        Html.button
-                                        [ "hidden"
-                                        , "text-neutral-3"
-
-                                        --
-                                        , "group-hover:inline-block"
-
-                                        -- Touch
-                                        --------
-                                        , "no-hover:inline-block"
-                                        ]
-                                        [ A.title "Copy address"
-                                        , { text = contact.address.accountAddress
-                                          , notification = Just "📋 Copied blockchain address to clipboard"
-                                          }
-                                            |> CopyToClipboard
-                                            |> E.onClick
-                                        ]
-                                        [ Icons.clipboardCopy [ S.class "w-4" ]
-                                        ]
-                                    ]
-                                ]
-                        )
+                    |> List.indexedMap
+                        (indexContact context model)
                     |> chunk
                         Html.div
                         [ "flex-1"
@@ -275,6 +229,206 @@ index contacts model =
 
             Nothing ->
                 Html.text ""
+        ]
+
+
+indexContact context model idx contact =
+    let
+        isSelected =
+            context.selectedContact == Just idx
+
+        removeEvent =
+            if context.confirmRemove then
+                RemoveContact { index = idx }
+
+            else
+                GotUpdatedIndexContext { context | confirmRemove = True }
+
+        selectEvent =
+            if isSelected then
+                GotUpdatedIndexContext { context | confirmRemove = False, selectedContact = Nothing }
+
+            else
+                GotUpdatedIndexContext { context | confirmRemove = False, selectedContact = Just idx }
+    in
+    Html.div
+        []
+        [ -----------------------------------------
+          -- ROW
+          -----------------------------------------
+          chunk
+            Html.div
+            [ "border-b"
+            , "border-neutral-6"
+            , "cursor-pointer"
+            , "flex"
+            , "group"
+            , "items-center"
+            , "py-3"
+
+            -- Dark mode
+            ------------
+            , "dark:border-darkness-above"
+            ]
+            [ E.onClick selectEvent
+            ]
+            [ chunk
+                Html.div
+                [ "pr-3"
+                , "w-5/12"
+                ]
+                []
+                [ Html.text contact.label ]
+            , chunk
+                Html.div
+                [ "duration-300"
+                , "text-neutral-4"
+                , "transition-opacity"
+                , "truncate"
+                , "w-5/12"
+
+                --
+                , if isSelected then
+                    "opacity-0"
+
+                  else
+                    "opacity-100"
+                ]
+                []
+                [ Html.text contact.address.accountAddress
+                ]
+            , chunk
+                Html.div
+                [ "flex"
+                , "items-center"
+                , "justify-end"
+                , "text-neutral-4"
+                , "w-2/12"
+                ]
+                []
+                [ chunk
+                    Html.button
+                    [ "hidden"
+                    , "text-neutral-3"
+
+                    --
+                    , "group-hover:inline-block"
+
+                    -- Touch
+                    --------
+                    , "no-hover:inline-block"
+                    ]
+                    [ A.title "Copy address"
+                    , { text = contact.address.accountAddress
+                      , notification = Just "📋 Copied blockchain address to clipboard"
+                      }
+                        |> CopyToClipboard
+                        |> E.onClickStopPropagation
+                    ]
+                    [ Icons.clipboardCopy [ S.class "w-4" ]
+                    ]
+                ]
+            ]
+
+        -----------------------------------------
+        -- DETAILS
+        -----------------------------------------
+        , if isSelected then
+            chunk
+                Html.div
+                [ "bg-neutral-6"
+                , "-mt-px"
+                , "-mx-6"
+                , "pb-8"
+                , "pt-6"
+                , "px-5"
+
+                -- Responsive
+                -------------
+                , "md:-mx-10"
+
+                -- Dark mode
+                ------------
+                , "dark:bg-darkness-above"
+                ]
+                []
+                [ -- Address
+                  ----------
+                  UI.Kit.label
+                    []
+                    [ Html.text "Address" ]
+                , chunk
+                    Html.div
+                    [ "break-all" ]
+                    []
+                    [ Html.text contact.address.accountAddress ]
+
+                -- Notes
+                --------
+                , Html.div
+                    []
+                    (case contact.notes of
+                        Just notes ->
+                            [ UI.Kit.label
+                                [ A.class "mt-6" ]
+                                [ Html.text "Notes" ]
+                            , chunk
+                                Html.div
+                                []
+                                []
+                                [ Html.text notes ]
+                            ]
+
+                        Nothing ->
+                            []
+                    )
+
+                -- Manage
+                ---------
+                , UI.Kit.label
+                    [ A.class "mt-6" ]
+                    [ Html.text "Manage" ]
+                , chunk
+                    Html.div
+                    [ "flex"
+                    , "pt-1"
+                    , "text-sm"
+                    ]
+                    []
+                    [ UI.Kit.button
+                        Html.button
+                        [ E.onClick removeEvent
+
+                        --
+                        , A.class "px-2 py-1"
+
+                        --
+                        , if context.confirmRemove then
+                            A.class "!bg-red"
+
+                          else
+                            A.class ""
+                        ]
+                        [ UI.Kit.buttonIcon Icons.minusCircle
+                        , if context.confirmRemove then
+                            Html.text "Confirm"
+
+                          else
+                            Html.text "Remove"
+                        ]
+
+                    -- , UI.Kit.button
+                    --     Html.a
+                    --     [ A.class "ml-2 px-2 py-1"
+                    --     ]
+                    --     [ UI.Kit.buttonIcon Icons.pencil
+                    --     , Html.text "Edit"
+                    --     ]
+                    ]
+                ]
+
+          else
+            Html.nothing
         ]
 
 
@@ -432,30 +586,9 @@ new userData context model =
             --
             , UI.Kit.formField
                 []
-                [ chunk
+                [ UI.Kit.button
                     Html.button
-                    [ "bg-neutral-4"
-                    , "border-0"
-                    , "font-medium"
-                    , "p-3"
-                    , "rounded"
-                    , "text-white"
-                    , "w-full"
-
-                    --
-                    , "focus:bg-neutral-3"
-                    , "focus:outline-none"
-                    , "focus:ring-transparent"
-
-                    -- Dark mode
-                    ------------
-                    , "dark:bg-neutral-2"
-                    , "dark:text-neutral-5"
-
-                    --
-                    , "dark:focus:bg-neutral-3"
-                    ]
-                    []
+                    [ A.class "p-3 w-full" ]
                     [ Html.text "Add contact" ]
                 ]
             ]

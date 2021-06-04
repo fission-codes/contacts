@@ -7,6 +7,7 @@ import Contact
 import Contacts.AddressType exposing (AddressType(..))
 import Contacts.Wnfs
 import Json.Decode as Decode
+import List.Extra as List
 import Maybe.Extra as Maybe
 import Page exposing (Page(..))
 import Ports
@@ -70,8 +71,14 @@ update msg =
         AddNewContact a ->
             addNewContact a
 
+        GotUpdatedIndexContext a ->
+            gotUpdatedIndexContext a
+
         GotUpdatedNewContext a ->
             gotUpdatedNewContext a
+
+        RemoveContact a ->
+            removeContact a
 
         -----------------------------------------
         -- Routing
@@ -263,11 +270,37 @@ addNewContact context model =
             )
 
 
+gotUpdatedIndexContext : Page.IndexContext -> Manager
+gotUpdatedIndexContext context model =
+    case model.page of
+        Index _ ->
+            Return.singleton { model | page = Index context }
+
+        _ ->
+            Return.singleton model
+
+
 gotUpdatedNewContext : Page.NewContext -> Manager
 gotUpdatedNewContext context model =
     case model.page of
         New _ ->
             Return.singleton { model | page = New context }
+
+        _ ->
+            Return.singleton model
+
+
+removeContact : { index : Int } -> Manager
+removeContact { index } model =
+    case model.userData.contacts of
+        Success list ->
+            let
+                newList =
+                    List.removeAt index list
+            in
+            return
+                (mapUserData (\u -> { u | contacts = Success newList }) model)
+                (Ports.webnativeRequest <| Contacts.Wnfs.save newList)
 
         _ ->
             Return.singleton model

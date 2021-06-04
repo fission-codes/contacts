@@ -89,7 +89,9 @@ type Msg
       -- Contacts
       -----------------------------------------
     | AddNewContact Page.NewContext
+    | GotUpdatedIndexContext Page.IndexContext
     | GotUpdatedNewContext Page.NewContext
+    | RemoveContact { index : Int }
       -----------------------------------------
       -- Routing
       -----------------------------------------

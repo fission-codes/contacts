@@ -16,7 +16,9 @@ import Url.Parser.Query as Query
 
 fromUrl : Url -> Page
 fromUrl url =
-    Maybe.withDefault Index (Url.parse route url)
+    Maybe.withDefault
+        (Index Page.index)
+        (Url.parse route url)
 
 
 
@@ -49,6 +51,6 @@ urlRequested request model =
 route : Parser (Page -> a) a
 route =
     oneOf
-        [ map Index top
+        [ map (Index Page.index) top
         , map (New Page.new) (s "new")
         ]
