@@ -290,49 +290,55 @@ new userData context model =
         --
         , UI.Kit.h2
             []
-            [ Html.text "Add a new address" ]
+            [ Html.text "Add a new contact" ]
 
         --
-        , [ chunk
-                Html.span
-                [ "ml-1" ]
-                []
-                [ Html.text "Blockchain address" ]
-          ]
-            |> chunk
-                Html.span
-                [ "inline-flex"
-                , "items-center"
-                ]
-                []
-            |> List.singleton
-            |> chunk
+        , UI.Kit.formField
+            []
+            [ chunk
                 Html.div
-                [ "pt-px" ]
+                [ "mt-4" ]
                 []
-            |> List.singleton
-            |> chunk
-                Html.div
-                [ "bg-marker-yellow-tint"
-                , "max-w-sm"
-                , "mt-8"
-                , "p-3"
-                , "rounded"
-                , "text-black"
-                , "text-opacity-50"
+                [ UI.Kit.label
+                    []
+                    [ Html.text "Type" ]
 
-                -- Dark mode
-                ------------
-                , "dark:bg-darkness-above"
-                , "dark:text-white"
-                , "dark:text-opacity-50"
+                --
+                , UI.Kit.dropdownContainer
+                    [ A.class "text-marker-yellow-shade dark:text-marker-yellow" ]
+                    [ UI.Kit.dropdownIcon
+                    , chunk
+                        Html.select
+                        [ "bg-marker-yellow-tint"
+                        , "bg-none"
+                        , "border-2"
+                        , "border-marker-yellow"
+                        , "cursor-not-allowed"
+                        , "rounded"
+                        , "w-full"
+
+                        --
+                        , "focus:ring-transparent"
+                        , "focus:border-marker-yellow"
+
+                        -- Dark mode
+                        ------------
+                        , "dark:bg-marker-yellow-shade"
+                        , "dark:border-opacity-20"
+                        ]
+                        [ A.disabled True ]
+                        [ Html.option
+                            []
+                            [ Html.text "Blockchain address" ]
+                        ]
+                    ]
                 ]
-                []
+            ]
 
         --
         , chunk
             Html.form
-            [ "mt-16" ]
+            []
             [ E.onSubmit (AddNewContact context) ]
             [ UI.Kit.formField
                 []
@@ -429,16 +435,25 @@ new userData context model =
                 [ chunk
                     Html.button
                     [ "bg-neutral-4"
+                    , "border-0"
                     , "font-medium"
                     , "p-3"
                     , "rounded"
                     , "text-white"
                     , "w-full"
 
+                    --
+                    , "focus:bg-neutral-3"
+                    , "focus:outline-none"
+                    , "focus:ring-transparent"
+
                     -- Dark mode
                     ------------
                     , "dark:bg-neutral-2"
                     , "dark:text-neutral-5"
+
+                    --
+                    , "dark:focus:bg-neutral-3"
                     ]
                     []
                     [ Html.text "Add contact" ]

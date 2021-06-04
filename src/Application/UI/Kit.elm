@@ -92,20 +92,44 @@ backButtonNodes =
     ]
 
 
-dropdown =
-    chunk
-        Html.select
-        [ "bg-transparent"
-        , "border-2"
-        , "border-neutral-5"
-        , "rounded"
-        , "text-inherit"
-        , "w-full"
+dropdown attributes nodes =
+    dropdownContainer
+        []
+        [ dropdownIcon
+        , chunk
+            Html.select
+            [ "bg-none"
+            , "bg-transparent"
+            , "border-2"
+            , "border-neutral-5"
+            , "rounded"
+            , "text-inherit"
+            , "w-full"
 
-        -- Dark mode
-        ------------
-        , "dark:border-neutral-2"
+            --
+            , "focus:border-neutral-4"
+            , "focus:ring-transparent"
+
+            -- Dark mode
+            ------------
+            , "dark:border-neutral-2"
+
+            --
+            , "dark:focus:border-neutral-3"
+            ]
+            attributes
+            nodes
         ]
+
+
+dropdownContainer =
+    chunk
+        Html.div
+        [ "relative" ]
+
+
+dropdownIcon =
+    Icons.selector [ S.class "absolute w-4 mr-3 opacity-70 right-0 top-1/2 transform -translate-y-1/2" ]
 
 
 fissionIcon { size } =
@@ -217,10 +241,17 @@ textArea =
         , "rounded"
         , "w-full"
 
+        --
+        , "focus:border-neutral-4"
+        , "focus:ring-transparent"
+
         -- Dark mode
         ------------
         , "dark:border-neutral-2"
         , "dark:placeholder-neutral-3"
+
+        --
+        , "dark:focus:border-neutral-3"
         ]
 
 
@@ -234,8 +265,15 @@ textField =
         , "rounded"
         , "w-full"
 
+        --
+        , "focus:border-neutral-4"
+        , "focus:ring-transparent"
+
         -- Dark mode
         ------------
         , "dark:border-neutral-2"
         , "dark:placeholder-neutral-3"
+
+        --
+        , "dark:focus:border-neutral-3"
         ]
