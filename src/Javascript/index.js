@@ -22,6 +22,11 @@ app.ports.copyToClipboard.subscribe(({ notification, text }) => {
 })
 
 
+app.ports.signOut.subscribe(() => {
+  webnative.leave()
+})
+
+
 
 // WEBNATIVE
 

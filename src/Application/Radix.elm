@@ -85,6 +85,7 @@ type Msg
     | CopyToClipboard { notification : Maybe String, text : String }
     | GotWebnativeResponse Webnative.Response
     | SignIn
+    | SignOut
       -----------------------------------------
       -- Contacts
       -----------------------------------------

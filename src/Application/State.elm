@@ -65,6 +65,9 @@ update msg =
         SignIn ->
             signIn
 
+        SignOut ->
+            signOut
+
         -----------------------------------------
         -- Contacts
         -----------------------------------------
@@ -218,6 +221,11 @@ signIn model =
         |> Webnative.redirectToLobby Webnative.CurrentUrl
         |> Ports.webnativeRequest
         |> return model
+
+
+signOut : Manager
+signOut model =
+    return model (Ports.signOut ())
 
 
 

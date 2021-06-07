@@ -224,7 +224,9 @@ index contacts context model =
                     , chunk
                         Html.button
                         [ "underline" ]
-                        []
+                        [ A.title "Sign out"
+                        , E.onClick SignOut
+                        ]
                         [ Html.text username ]
                     , Html.text "."
                     ]

@@ -189,7 +189,7 @@ fissionIcon { size } =
 footnote =
     chunk
         Html.div
-        [ "mt-4"
+        [ "mt-12"
         , "text-neutral-4"
         , "text-xs"
 
