@@ -8,7 +8,13 @@ import { Elm } from "../Application/Main.elm"
 // ELM
 
 
-const app = Elm.Main.init({})
+const app = Elm.Main.init({
+  flags: {
+    seeds: Array.from(
+      crypto.getRandomValues(new Uint32Array(4))
+    )
+  }
+})
 
 
 app.ports.copyToClipboard.subscribe(({ notification, text }) => {

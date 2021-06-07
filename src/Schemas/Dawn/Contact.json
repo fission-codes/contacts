@@ -18,12 +18,23 @@
     }
   ],
   "required": [
+    "uuid",
     "label",
     "createdAt",
     "modifiedAt",
     "address"
   ],
   "properties": {
+    "uuid": {
+      "$id": "#/properties/uuid",
+      "type": "string",
+      "title": "Label",
+      "description": "A uuid for this item.",
+      "default": "",
+      "examples": [
+        "a58bca0d-a38f-42a1-8b33-bcd53027881c"
+      ]
+    },
     "label": {
       "$id": "#/properties/label",
       "type": "string",

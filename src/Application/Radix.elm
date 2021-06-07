@@ -6,6 +6,7 @@ import ChainID exposing (ChainID)
 import Contact exposing (Contact)
 import Page exposing (Page)
 import RemoteData exposing (RemoteData(..))
+import UUID
 import Url exposing (Url)
 import Webnative
 import Webnative.Path as Path exposing (File, Path)
@@ -16,7 +17,7 @@ import Webnative.Path as Path exposing (File, Path)
 
 
 type alias Flags =
-    {}
+    { seeds : List Int }
 
 
 
@@ -26,6 +27,7 @@ type alias Flags =
 type alias Model =
     { navKey : Nav.Key
     , page : Page
+    , seeds : UUID.Seeds
     , url : Url
     , userData : UserData
     }

@@ -12,10 +12,12 @@ import Maybe.Extra as Maybe
 import Page exposing (Page(..))
 import Ports
 import Radix exposing (..)
+import Random
 import RemoteData exposing (RemoteData(..))
 import Return exposing (return)
 import Routing
 import Tag exposing (Tag(..))
+import UUID
 import Url exposing (Url)
 import Webnative exposing (Artifact(..), DecodedResponse(..), State(..))
 import Wnfs exposing (Artifact(..))
@@ -30,6 +32,21 @@ init flags url navKey =
     Tuple.pair
         { page = Routing.fromUrl url
         , navKey = navKey
+        , seeds =
+            case flags.seeds of
+                [ a, b, c, d ] ->
+                    { seed1 = Random.initialSeed a
+                    , seed2 = Random.initialSeed b
+                    , seed3 = Random.initialSeed c
+                    , seed4 = Random.initialSeed d
+                    }
+
+                _ ->
+                    { seed1 = Random.initialSeed 0
+                    , seed2 = Random.initialSeed 0
+                    , seed3 = Random.initialSeed 0
+                    , seed4 = Random.initialSeed 0
+                    }
         , url = url
         , userData =
             { blockchainIds = Loading
@@ -239,8 +256,14 @@ addNewContact context model =
             RemoteData.withDefault
                 CAIP.defaultChainIds
                 model.userData.blockchainIds
+
+        ( uuid, newSeeds ) =
+            UUID.step model.seeds
     in
-    { address =
+    { uuid = UUID.toString uuid
+
+    --
+    , address =
         { accountAddress = context.accountAddress
         , chainID =
             context.chainID
@@ -265,7 +288,12 @@ addNewContact context model =
     }
         |> List.singleton
         |> List.append (RemoteData.withDefault [] model.userData.contacts)
-        |> (\c -> mapUserData (\u -> { u | contacts = Success c }) model)
+        |> (\c ->
+                mapUserData (\u -> { u | contacts = Success c }) model
+           )
+        |> (\m ->
+                { m | seeds = newSeeds }
+           )
         |> Return.singleton
         |> Return.command
             (Nav.pushUrl model.navKey "../")
