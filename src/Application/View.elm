@@ -3,6 +3,7 @@ module View exposing (view)
 import CAIP
 import Chunky exposing (..)
 import Contact
+import Contacts.Form as Form
 import Dict
 import Dict.Extra as Dict
 import Heroicons.Solid as Icons
@@ -11,7 +12,9 @@ import Html.Attributes as A
 import Html.Events as E
 import Html.Events.Extra as E
 import Html.Extra as Html
+import List.Extra as List
 import Loaders
+import Maybe.Extra as Maybe
 import Page exposing (Page(..))
 import Radix exposing (Model, Msg(..))
 import RemoteData exposing (RemoteData(..))
@@ -73,11 +76,18 @@ view model =
 
             Success contacts ->
                 case model.page of
+                    Edit context uuid ->
+                        model.userData.contacts
+                            |> RemoteData.withDefault []
+                            |> List.find (.uuid >> (==) uuid)
+                            |> Maybe.map (edit model context)
+                            |> Maybe.withDefault (notFound model)
+
                     Index context ->
                         index contacts context model
 
                     New context ->
-                        new model.userData context model
+                        new context model
 
             Failure error ->
                 -- TODO
@@ -140,6 +150,88 @@ notAuthorised =
             , Html.text "Sign in with Fission"
             ]
         ]
+
+
+
+-- EDIT
+
+
+edit model context contact =
+    mainLayout
+        [ UI.Kit.backButtons { href = "../../" }
+
+        --
+        , UI.Kit.h2
+            []
+            [ Html.text "Edit contact" ]
+
+        --
+        , Form.typeSelector
+
+        --
+        , chunk
+            Html.form
+            []
+            [ E.onSubmit (UpdateContact contact context) ]
+            [ Form.label
+                (\a ->
+                    GotUpdatedEditContext
+                        { context | label = Just a }
+                )
+                (Maybe.withDefault
+                    contact.label
+                    context.label
+                )
+
+            --
+            , Form.chainID
+                (\a ->
+                    GotUpdatedEditContext
+                        { context | chainID = Just a }
+                )
+                (Maybe.or
+                    context.chainID
+                    (Just contact.address.chainID)
+                )
+                model.userData
+
+            --
+            , Form.address
+                (\a ->
+                    GotUpdatedEditContext
+                        { context | accountAddress = Just a }
+                )
+                (Maybe.withDefault
+                    contact.address.accountAddress
+                    context.accountAddress
+                )
+
+            --
+            , Form.notes
+                (\a ->
+                    GotUpdatedEditContext
+                        { context | notes = Just a }
+                )
+                (context.notes
+                    |> Maybe.orElse contact.notes
+                    |> Maybe.withDefault ""
+                )
+
+            --
+            , UI.Kit.formField
+                []
+                [ UI.Kit.button
+                    Html.button
+                    [ A.class "p-3 w-full" ]
+                    [ Html.text "Save contact" ]
+                ]
+            ]
+        ]
+
+
+notFound model =
+    -- TODO
+    [ Html.text "Can't find this contact" ]
 
 
 
@@ -441,10 +533,9 @@ indexContact context model idx contact =
 -- NEW
 
 
-new userData context model =
+new context model =
     mainLayout
-        [ UI.Kit.bgBackButton { href = "../" }
-        , Html.div [] [ UI.Kit.backButton { href = "../" } ]
+        [ UI.Kit.backButtons { href = "../" }
 
         --
         , UI.Kit.h2
@@ -452,141 +543,44 @@ new userData context model =
             [ Html.text "Add a new contact" ]
 
         --
-        , UI.Kit.formField
-            []
-            [ chunk
-                Html.div
-                [ "mt-4" ]
-                []
-                [ UI.Kit.label
-                    []
-                    [ Html.text "Type" ]
-
-                --
-                , UI.Kit.dropdownContainer
-                    [ A.class "text-marker-yellow-shade dark:text-marker-yellow" ]
-                    [ UI.Kit.dropdownIcon
-                    , chunk
-                        Html.select
-                        [ "bg-marker-yellow-tint"
-                        , "bg-none"
-                        , "border-2"
-                        , "border-marker-yellow"
-                        , "cursor-not-allowed"
-                        , "rounded"
-                        , "w-full"
-
-                        --
-                        , "focus:ring-transparent"
-                        , "focus:border-marker-yellow"
-
-                        -- Dark mode
-                        ------------
-                        , "dark:bg-marker-yellow-shade"
-                        , "dark:border-opacity-20"
-                        ]
-                        [ A.disabled True ]
-                        [ Html.option
-                            []
-                            [ Html.text "Blockchain address" ]
-                        ]
-                    ]
-                ]
-            ]
+        , Form.typeSelector
 
         --
         , chunk
             Html.form
             []
             [ E.onSubmit (AddNewContact context) ]
-            [ UI.Kit.formField
-                []
-                [ UI.Kit.label
-                    []
-                    [ Html.text "Label" ]
-                , UI.Kit.textField
-                    [ A.type_ "text"
-                    , A.placeholder "Main ETH account"
-                    , A.required True
-                    , E.onInput
-                        (\a ->
-                            GotUpdatedNewContext
-                                { context | label = a }
-                        )
-                    ]
-                    []
-                ]
+            [ Form.label
+                (\a ->
+                    GotUpdatedNewContext
+                        { context | label = a }
+                )
+                context.label
 
             --
-            , UI.Kit.formField
-                []
-                [ UI.Kit.label
-                    []
-                    [ Html.text "Chain (& Network)" ]
-                , UI.Kit.dropdown
-                    [ E.onInput
-                        (\a ->
-                            GotUpdatedNewContext
-                                { context | chainID = Just a }
-                        )
-                    ]
-                    (userData.blockchainIds
-                        |> RemoteData.withDefault CAIP.defaultChainIds
-                        |> Dict.groupBy .group
-                        |> Dict.toList
-                        |> List.sortBy Tuple.first
-                        |> List.map
-                            (\( label, group ) ->
-                                group
-                                    |> List.map
-                                        (\c ->
-                                            Html.option
-                                                [ A.value (CAIP.chainIdToString c)
-                                                , A.selected False -- TODO
-                                                ]
-                                                [ Html.text c.label ]
-                                        )
-                                    |> Html.optgroup
-                                        [ A.attribute "label" label ]
-                            )
-                    )
-                ]
+            , Form.chainID
+                (\a ->
+                    GotUpdatedNewContext
+                        { context | chainID = Just a }
+                )
+                context.chainID
+                model.userData
 
             --
-            , UI.Kit.formField
-                []
-                [ UI.Kit.label
-                    []
-                    [ Html.text "Address" ]
-                , UI.Kit.textField
-                    [ A.type_ "text"
-                    , A.placeholder "0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb"
-                    , A.required True
-                    , E.onInput
-                        (\a ->
-                            GotUpdatedNewContext
-                                { context | accountAddress = a }
-                        )
-                    ]
-                    []
-                ]
+            , Form.address
+                (\a ->
+                    GotUpdatedNewContext
+                        { context | accountAddress = a }
+                )
+                context.accountAddress
 
             --
-            , UI.Kit.formField
-                []
-                [ UI.Kit.label
-                    []
-                    [ Html.text "Notes" ]
-                , UI.Kit.textArea
-                    [ A.rows 3
-                    , E.onInput
-                        (\a ->
-                            GotUpdatedNewContext
-                                { context | notes = a }
-                        )
-                    ]
-                    []
-                ]
+            , Form.notes
+                (\a ->
+                    GotUpdatedNewContext
+                        { context | notes = a }
+                )
+                context.notes
 
             --
             , UI.Kit.formField

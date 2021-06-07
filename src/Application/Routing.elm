@@ -52,5 +52,8 @@ route : Parser (Page -> a) a
 route =
     oneOf
         [ map (Index Page.index) top
+
+        --
+        , map (Edit Page.edit) (s "edit" </> string)
         , map (New Page.new) (s "new")
         ]

@@ -8,8 +8,17 @@ import CAIP
 
 
 type Page
-    = Index IndexContext
+    = Edit EditContext String
+    | Index IndexContext
     | New NewContext
+
+
+type alias EditContext =
+    { accountAddress : Maybe String
+    , chainID : Maybe String
+    , label : Maybe String
+    , notes : Maybe String
+    }
 
 
 type alias IndexContext =
@@ -23,6 +32,15 @@ type alias NewContext =
     , chainID : Maybe String
     , label : String
     , notes : String
+    }
+
+
+edit : EditContext
+edit =
+    { accountAddress = Nothing
+    , chainID = Nothing
+    , label = Nothing
+    , notes = Nothing
     }
 
 

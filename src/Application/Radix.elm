@@ -2,8 +2,10 @@ module Radix exposing (..)
 
 import Browser
 import Browser.Navigation as Nav
+import CAIP exposing (ChainIdCollection)
 import ChainID exposing (ChainID)
 import Contact exposing (Contact)
+import Dict exposing (Dict)
 import Page exposing (Page)
 import RemoteData exposing (RemoteData(..))
 import UUID
@@ -33,11 +35,19 @@ type alias Model =
     }
 
 
+
+-- 🌳  ~  USER DATA
+
+
 type alias UserData =
-    { blockchainIds : RemoteData String (List ChainID)
+    { blockchainIds : RemoteData String ChainIdCollection
     , contacts : RemoteData String (List Contact)
     , name : Maybe String
     }
+
+
+
+-- 🌳  ~  PERMISSIONS
 
 
 appPermissions : Webnative.AppPermissions
@@ -92,9 +102,11 @@ type Msg
       -- Contacts
       -----------------------------------------
     | AddNewContact Page.NewContext
+    | GotUpdatedEditContext Page.EditContext
     | GotUpdatedIndexContext Page.IndexContext
     | GotUpdatedNewContext Page.NewContext
     | RemoveContact { index : Int }
+    | UpdateContact Contact Page.EditContext
       -----------------------------------------
       -- Routing
       -----------------------------------------

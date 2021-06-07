@@ -32,7 +32,7 @@ initBlockchains =
         { path = blockchainsPath
         , tag = Tag.toString Tag.SavedBlockchains
         }
-        (CAIP.defaultChainIds
+        (CAIP.defaultChainIdsList
             |> Encode.list ChainID.encodeChainID
             |> Encode.encode 0
         )

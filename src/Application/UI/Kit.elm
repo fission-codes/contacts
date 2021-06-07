@@ -8,6 +8,13 @@ import Svg
 import Svg.Attributes as S
 
 
+backButtons params =
+    Html.div []
+        [ bgBackButton params
+        , backButton params
+        ]
+
+
 backButton { href } =
     chunk
         Html.a

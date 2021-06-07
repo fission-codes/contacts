@@ -3,9 +3,10 @@ module State exposing (..)
 import Browser.Navigation as Nav
 import CAIP
 import ChainID
-import Contact
+import Contact exposing (Contact)
 import Contacts.AddressType exposing (AddressType(..))
 import Contacts.Wnfs
+import Dict
 import Json.Decode as Decode
 import List.Extra as List
 import Maybe.Extra as Maybe
@@ -91,6 +92,9 @@ update msg =
         AddNewContact a ->
             addNewContact a
 
+        GotUpdatedEditContext a ->
+            gotUpdatedEditContext a
+
         GotUpdatedIndexContext a ->
             gotUpdatedIndexContext a
 
@@ -99,6 +103,9 @@ update msg =
 
         RemoveContact a ->
             removeContact a
+
+        UpdateContact a b ->
+            updateContact a b
 
         -----------------------------------------
         -- Routing
@@ -167,10 +174,17 @@ gotWebnativeResponse response model =
         Wnfs LoadedBlockchains (Utf8Content json) ->
             json
                 |> Decode.decodeString (Decode.list ChainID.chainID)
-                |> Result.withDefault []
-                |> (\c ->
+                |> Result.map (List.sortBy .label)
+                |> Result.map
+                    (\list ->
+                        { list = list
+                        , groups = CAIP.chainIdsListToGroups list
+                        }
+                    )
+                |> Result.withDefault CAIP.defaultChainIds
+                |> (\dict ->
                         mapUserData
-                            (\u -> { u | blockchainIds = Success c })
+                            (\u -> { u | blockchainIds = Success dict })
                             model
                    )
                 |> Return.singleton
@@ -268,16 +282,16 @@ addNewContact context model =
         , chainID =
             context.chainID
                 |> Maybe.orElse
-                    (chainIds
+                    (chainIds.list
                         |> List.head
                         |> Maybe.map CAIP.chainIdToString
                     )
                 |> Maybe.withDefault ""
         , addressType = Contacts.AddressType.toString BlockchainAddress
         }
-    , createdAt = ""
+    , createdAt = "TODO"
     , label = context.label
-    , modifiedAt = ""
+    , modifiedAt = "TODO"
     , notes =
         case String.trim context.notes of
             "" ->
@@ -304,6 +318,16 @@ addNewContact context model =
                     |> Contacts.Wnfs.save
                     |> Ports.webnativeRequest
             )
+
+
+gotUpdatedEditContext : Page.EditContext -> Manager
+gotUpdatedEditContext context model =
+    case model.page of
+        Edit _ uid ->
+            Return.singleton { model | page = Edit context uid }
+
+        _ ->
+            Return.singleton model
 
 
 gotUpdatedIndexContext : Page.IndexContext -> Manager
@@ -340,6 +364,62 @@ removeContact { index } model =
 
         _ ->
             Return.singleton model
+
+
+updateContact : Contact -> Page.EditContext -> Manager
+updateContact contact context model =
+    { contact
+        | address =
+            { accountAddress =
+                Maybe.withDefault
+                    contact.address.accountAddress
+                    context.accountAddress
+            , chainID =
+                Maybe.withDefault
+                    contact.address.chainID
+                    context.chainID
+            , addressType =
+                Contacts.AddressType.toString BlockchainAddress
+            }
+        , label =
+            Maybe.withDefault
+                contact.label
+                context.label
+        , notes =
+            case Maybe.map String.trim context.notes of
+                Just "" ->
+                    contact.notes
+
+                Just notes ->
+                    Just notes
+
+                Nothing ->
+                    contact.notes
+    }
+        |> (\a ->
+                List.map
+                    (\b ->
+                        if a.uuid == b.uuid then
+                            a
+
+                        else
+                            b
+                    )
+                    (RemoteData.withDefault [] model.userData.contacts)
+           )
+        |> (\c ->
+                mapUserData (\u -> { u | contacts = Success c }) model
+           )
+        |> Return.singleton
+        |> Return.command
+            (Nav.pushUrl model.navKey "../../")
+        |> Return.effect_
+            (\newModel ->
+                newModel.userData.contacts
+                    |> RemoteData.withDefault []
+                    |> Contacts.Wnfs.save
+                    |> Ports.webnativeRequest
+            )
 
 
 
