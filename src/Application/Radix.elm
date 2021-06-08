@@ -8,6 +8,7 @@ import Contact exposing (Contact)
 import Dict exposing (Dict)
 import Page exposing (Page)
 import RemoteData exposing (RemoteData(..))
+import Time
 import UUID
 import Url exposing (Url)
 import Webnative
@@ -95,18 +96,19 @@ type Msg
       -- 🐚
       -----------------------------------------
     | CopyToClipboard { notification : Maybe String, text : String }
+    | GetCurrentTimeFor (Time.Posix -> Msg)
     | GotWebnativeResponse Webnative.Response
     | SignIn
     | SignOut
       -----------------------------------------
       -- Contacts
       -----------------------------------------
-    | AddNewContact Page.NewContext
+    | AddNewContact Page.NewContext Time.Posix
     | GotUpdatedEditContext Page.EditContext
     | GotUpdatedIndexContext Page.IndexContext
     | GotUpdatedNewContext Page.NewContext
     | RemoveContact { index : Int }
-    | UpdateContact Contact Page.EditContext
+    | UpdateContact Contact Page.EditContext Time.Posix
       -----------------------------------------
       -- Routing
       -----------------------------------------

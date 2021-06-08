@@ -7,6 +7,7 @@ import Contact exposing (Contact)
 import Contacts.AddressType exposing (AddressType(..))
 import Contacts.Wnfs
 import Dict
+import Iso8601
 import Json.Decode as Decode
 import List.Extra as List
 import Maybe.Extra as Maybe
@@ -18,6 +19,8 @@ import RemoteData exposing (RemoteData(..))
 import Return exposing (return)
 import Routing
 import Tag exposing (Tag(..))
+import Task
+import Time
 import UUID
 import Url exposing (Url)
 import Webnative exposing (Artifact(..), DecodedResponse(..), State(..))
@@ -77,6 +80,9 @@ update msg =
         CopyToClipboard a ->
             copyToClipboard a
 
+        GetCurrentTimeFor a ->
+            getCurrentTimeFor a
+
         GotWebnativeResponse a ->
             gotWebnativeResponse a
 
@@ -89,8 +95,8 @@ update msg =
         -----------------------------------------
         -- Contacts
         -----------------------------------------
-        AddNewContact a ->
-            addNewContact a
+        AddNewContact a b ->
+            addNewContact a b
 
         GotUpdatedEditContext a ->
             gotUpdatedEditContext a
@@ -104,8 +110,8 @@ update msg =
         RemoveContact a ->
             removeContact a
 
-        UpdateContact a b ->
-            updateContact a b
+        UpdateContact a b c ->
+            updateContact a b c
 
         -----------------------------------------
         -- Routing
@@ -135,6 +141,11 @@ copyToClipboard params model =
     params
         |> Ports.copyToClipboard
         |> return model
+
+
+getCurrentTimeFor : (Time.Posix -> Msg) -> Manager
+getCurrentTimeFor producer model =
+    return model (Task.perform producer Time.now)
 
 
 gotWebnativeResponse : Webnative.Response -> Manager
@@ -177,7 +188,8 @@ gotWebnativeResponse response model =
                 |> Result.map (List.sortBy .label)
                 |> Result.map
                     (\list ->
-                        { list = list
+                        { dict = CAIP.chainIdsListToDict list
+                        , list = list
                         , groups = CAIP.chainIdsListToGroups list
                         }
                     )
@@ -263,8 +275,8 @@ signOut model =
 -- CONTACTS
 
 
-addNewContact : Page.NewContext -> Manager
-addNewContact context model =
+addNewContact : Page.NewContext -> Time.Posix -> Manager
+addNewContact context time model =
     let
         chainIds =
             RemoteData.withDefault
@@ -273,6 +285,9 @@ addNewContact context model =
 
         ( uuid, newSeeds ) =
             UUID.step model.seeds
+
+        isoTime =
+            Iso8601.fromTime time
     in
     { uuid = UUID.toString uuid
 
@@ -289,9 +304,7 @@ addNewContact context model =
                 |> Maybe.withDefault ""
         , addressType = Contacts.AddressType.toString BlockchainAddress
         }
-    , createdAt = "TODO"
     , label = context.label
-    , modifiedAt = "TODO"
     , notes =
         case String.trim context.notes of
             "" ->
@@ -299,6 +312,10 @@ addNewContact context model =
 
             notes ->
                 Just notes
+
+    --
+    , createdAt = isoTime
+    , modifiedAt = isoTime
     }
         |> List.singleton
         |> List.append (RemoteData.withDefault [] model.userData.contacts)
@@ -358,16 +375,26 @@ removeContact { index } model =
                 newList =
                     List.removeAt index list
             in
-            return
-                (mapUserData (\u -> { u | contacts = Success newList }) model)
-                (Ports.webnativeRequest <| Contacts.Wnfs.save newList)
+            model
+                |> mapUserData (\u -> { u | contacts = Success newList })
+                |> (\m ->
+                        case m.page of
+                            Index c ->
+                                { m | page = Index { c | selectedContact = Nothing } }
+
+                            _ ->
+                                m
+                   )
+                |> Return.singleton
+                |> Return.command
+                    (Ports.webnativeRequest <| Contacts.Wnfs.save newList)
 
         _ ->
             Return.singleton model
 
 
-updateContact : Contact -> Page.EditContext -> Manager
-updateContact contact context model =
+updateContact : Contact -> Page.EditContext -> Time.Posix -> Manager
+updateContact contact context time model =
     { contact
         | address =
             { accountAddress =
@@ -395,6 +422,9 @@ updateContact contact context model =
 
                 Nothing ->
                     contact.notes
+
+        --
+        , modifiedAt = Iso8601.fromTime time
     }
         |> (\a ->
                 List.map

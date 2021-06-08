@@ -10,7 +10,8 @@ import Dict.Extra as Dict
 
 
 type alias ChainIdCollection =
-    { list : List ChainID
+    { dict : Dict String ChainID
+    , list : List ChainID
     , groups : ChainIdGroups
     }
 
@@ -29,7 +30,8 @@ testNet =
 
 defaultChainIds : ChainIdCollection
 defaultChainIds =
-    { list = defaultChainIdsList
+    { dict = chainIdsListToDict defaultChainIdsList
+    , list = defaultChainIdsList
     , groups = defaultChainIdGroups
     }
 

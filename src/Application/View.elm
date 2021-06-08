@@ -172,7 +172,11 @@ edit model context contact =
         , chunk
             Html.form
             []
-            [ E.onSubmit (UpdateContact contact context) ]
+            [ E.onSubmit
+                (GetCurrentTimeFor
+                    (UpdateContact contact context)
+                )
+            ]
             [ Form.label
                 (\a ->
                     GotUpdatedEditContext
@@ -230,8 +234,19 @@ edit model context contact =
 
 
 notFound model =
-    -- TODO
-    [ Html.text "Can't find this contact" ]
+    mainLayout
+        [ UI.Kit.backButtons { href = "/" }
+        , chunk
+            Html.div
+            [ "flex"
+            , "items-center"
+            , "text-red"
+            ]
+            []
+            [ Icons.exclamationCircle [ S.class "mr-2 w-4" ]
+            , Html.text "Cannot find this contact"
+            ]
+        ]
 
 
 
@@ -449,10 +464,28 @@ indexContact context model idx contact =
                 , "dark:bg-darkness-above"
                 ]
                 []
-                [ -- Address
-                  ----------
+                [ -- Chain
+                  --------
                   UI.Kit.label
                     []
+                    [ Html.text "Chain" ]
+                , chunk
+                    Html.div
+                    []
+                    []
+                    [ model.userData.blockchainIds
+                        |> RemoteData.withDefault CAIP.defaultChainIds
+                        |> .dict
+                        |> Dict.get contact.address.chainID
+                        |> Maybe.map .label
+                        |> Maybe.withDefault ""
+                        |> Html.text
+                    ]
+
+                -- Address
+                ----------
+                , UI.Kit.label
+                    [ A.class "mt-6" ]
                     [ Html.text "Address" ]
                 , chunk
                     Html.div
@@ -513,14 +546,14 @@ indexContact context model idx contact =
                           else
                             Html.text "Remove"
                         ]
-
-                    -- , UI.Kit.button
-                    --     Html.a
-                    --     [ A.class "ml-2 px-2 py-1"
-                    --     ]
-                    --     [ UI.Kit.buttonIcon Icons.pencil
-                    --     , Html.text "Edit"
-                    --     ]
+                    , UI.Kit.button
+                        Html.a
+                        [ A.class "ml-2 px-2 py-1"
+                        , A.href ("edit/" ++ contact.uuid)
+                        ]
+                        [ UI.Kit.buttonIcon Icons.pencil
+                        , Html.text "Edit"
+                        ]
                     ]
                 ]
 
@@ -549,7 +582,11 @@ new context model =
         , chunk
             Html.form
             []
-            [ E.onSubmit (AddNewContact context) ]
+            [ E.onSubmit
+                (GetCurrentTimeFor
+                    (AddNewContact context)
+                )
+            ]
             [ Form.label
                 (\a ->
                     GotUpdatedNewContext
