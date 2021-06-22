@@ -7,12 +7,13 @@
   "default": {},
   "examples": [
     {
+      "uuid": "a58bca0d-a38f-42a1-8b33-bcd53027881c",
       "label": "Main ETH account",
       "notes": "💰",
       "createdAt": "2021-05-26T16:03:03Z",
       "modifiedAt": "2021-05-26T16:03:03Z",
       "address": {
-        "accountId": "0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb",
+        "accountAddress": "0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb",
         "chainId": "eip155:1"
       }
     }
@@ -28,7 +29,7 @@
     "uuid": {
       "$id": "#/properties/uuid",
       "type": "string",
-      "title": "Label",
+      "title": "UUID",
       "description": "A uuid for this item.",
       "default": "",
       "examples": [
@@ -84,7 +85,7 @@
       "examples": [
         {
           "type": "BLOCKCHAIN_ADDRESS",
-          "accountId": "0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb",
+          "accountAddress": "0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb",
           "chainId": "eip155:1"
         }
       ],
